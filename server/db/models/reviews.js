@@ -7,10 +7,10 @@ const Review = db.define('review', {
     validate: {
       min: 1,
       max: 5
-    },
-    description: {
-      type: Sequelize.TEXT
     }
+  },
+  description: {
+    type: Sequelize.TEXT
   }
 })
 
