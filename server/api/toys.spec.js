@@ -28,5 +28,5 @@ describe('Toy routes', () => {
       expect(res.body).to.be.an('array')
       expect(res.body[0].name).to.be.equal(name)
     })
-  }) // end describe('/api/users')
-}) // end describe('User routes')
+  }) // end describe('/api/toys')
+}) // end describe('Toy routes')
