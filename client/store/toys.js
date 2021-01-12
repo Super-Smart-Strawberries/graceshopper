@@ -30,3 +30,11 @@ export const fetchToys = () => async (dispatch) => {
 /**
  * REDUCER
  */
+export default function (state = initialState, action) {
+  switch (action.type) {
+    case GET_TOYS:
+      return action.toys
+    default:
+      return state
+  }
+}
