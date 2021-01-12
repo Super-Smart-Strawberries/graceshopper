@@ -1,6 +1,6 @@
 const User = require('./user')
 const Toy = require('./toys')
-const Review = require('reviews')
+const Review = require('./reviews')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -20,5 +20,5 @@ Review.belongsTo(Toy)
 module.exports = {
   User,
   Toy,
-  Review,
+  Review
 }
