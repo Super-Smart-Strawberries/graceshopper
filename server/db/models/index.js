@@ -10,6 +10,7 @@ const Review = require('reviews')
  */
 Toy.hasMany(Review)
 Review.belongsTo(Toy)
+User.hasMany(Toy)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
