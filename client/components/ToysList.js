@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchToys} from '../store/toys'
-import {fetchReviews} from '../store/reviews'
 
 class ToyList extends Component {
   componentDidMount() {

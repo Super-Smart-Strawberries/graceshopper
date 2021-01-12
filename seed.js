@@ -6,20 +6,15 @@ const seed = async () => {
     await db.sync({force: true})
 
     // seed your database here!
-    await Robot.create({
+    await Toy.create({
       name: 'Rubber Ducky',
-      imageUrl:
-        'https://images.unsplash.com/photo-1483706571191-85c0c76b1947?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8cm9ib3QlMjBwbGFudHxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60',
+      image:
+        'https://images.unsplash.com/photo-1601829534265-66684bd4dcc6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80',
     })
 
-    const robots = await Robot.findAll()
-    const projects = await Project.findAll()
-    await robots[2].addProject(projects[2])
-    await robots[3].addProject(projects[1])
-    await robots[0].addProject(projects[1])
-    await robots[4].addProject(projects[2])
-    await projects[1].addRobot(robots[0])
-    await projects[2].addRobot(robots[3])
+    const toys = await Toy.findAll()
+    const reviews = await Review.findAll()
+    await toys[1].addReview(reviews[2])
   } catch (err) {
     console.log(red(err))
   }
