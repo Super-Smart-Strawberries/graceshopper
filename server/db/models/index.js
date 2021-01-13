@@ -1,6 +1,6 @@
 const User = require('./user')
 const PurchaseActivity = require('./purchase-activity')
-const OrderHistory = require('./order-history')
+// const OrderHistory = require('./order-history')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
