@@ -13,12 +13,17 @@ const initialState = {}
 /**
  * ACTION CREATORS
  */
-const getToys = (toys) => ({type: GET_TOY, toys})
+const getToys = toys => {
+  return {
+    type: GET_TOYS,
+    toys
+  }
+}
 
 /**
  * THUNK CREATORS
  */
-export const fetchToys = () => async (dispatch) => {
+export const fetchToys = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/toys')
     dispatch(getToys(data))
@@ -30,7 +35,7 @@ export const fetchToys = () => async (dispatch) => {
 /**
  * REDUCER
  */
-export default function (state = initialState, action) {
+export default function toysReducer(state = initialState, action) {
   switch (action.type) {
     case GET_TOYS:
       return action.toys

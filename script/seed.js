@@ -9,16 +9,16 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'}),
-    Toy.create({
-      name: 'Rubber Ducky',
-      image:
-        'https://images.unsplash.com/photo-1601829534265-66684bd4dcc6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80'
-    }),
-    await Review.create({
-      ratings: 3,
-      description: 'Giant rubber ducky'
-    })
+    User.create({email: 'murphy@email.com', password: '123'})
+    // Toy.create({
+    //   name: 'Rubber Ducky',
+    //   image:
+    //     'https://images.unsplash.com/photo-1601829534265-66684bd4dcc6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80',
+    // }),
+    // Review.create({
+    //   ratings: 3,
+    //   description: 'Giant rubber ducky',
+    // }),
   ])
 
   console.log(`seeded ${users.length} users`)
