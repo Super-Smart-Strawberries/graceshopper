@@ -11,6 +11,15 @@ const Review = require('./reviews')
 Toy.hasMany(Review)
 Review.belongsTo(Toy)
 
+PurchaseActivity.belongsTo(UserLogin)
+UserLogin.hasOne(PurchaseActivity)
+
+PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
+Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
+
+OrderHistory.belongsTo(PurchaseActivity)
+PurchaseActivity.hasOne(OrderHistory)
+
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
