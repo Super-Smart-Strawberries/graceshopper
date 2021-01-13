@@ -6,9 +6,8 @@ import Routes from './routes'
 const App = () => {
   return (
     <div>
-      {/* <Navbar />
-      <Routes /> */}
-      Hello, world!
+      <Navbar />
+      <Routes />
     </div>
   )
 }
