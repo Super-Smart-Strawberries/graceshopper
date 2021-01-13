@@ -9,8 +9,8 @@ const PurchaseActivity = require('./purchase-activity')
  *    BlogPost.belongsTo(User)
  */
 
-PurchaseActivity.belongsTo(UserLogin)
-UserLogin.hasOne(PurchaseActivity)
+// PurchaseActivity.belongsTo(UserLogin)
+// UserLogin.hasOne(PurchaseActivity)
 
 PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
 Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
