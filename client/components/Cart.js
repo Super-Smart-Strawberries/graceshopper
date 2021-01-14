@@ -11,8 +11,8 @@ class Cart extends React.Component {
   }
 
   render() {
-    const {activity} = this.props
-    const toys = activity.toys //to get the toys array insidet activity object
+    const {items} = this.props
+    const toys = items.toys //to get the toys array insidet activity object
 
     let cartItems = toys.length ? (
       toys.map(item => {

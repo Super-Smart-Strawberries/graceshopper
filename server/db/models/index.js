@@ -2,6 +2,8 @@ const PurchaseActivity = require('./purchase-activity')
 const OrderHistory = require('./order-history')
 const UserLogin = require('./user-login')
 const UserInfo = require('./user-info')
+const Toy = require('./toys')
+const Review = require('./reviews')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -9,15 +11,18 @@ const UserInfo = require('./user-info')
  *
  *    BlogPost.belongsTo(User)
  */
+Toy.hasMany(Review)
+Review.belongsTo(Toy)
 
 PurchaseActivity.belongsTo(UserLogin)
 UserLogin.hasOne(PurchaseActivity)
 
-PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
+PurchaseActivity.belongsToMany(Toy, {through: 'toypurchases'})
 Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
 
 OrderHistory.belongsTo(PurchaseActivity)
 PurchaseActivity.hasOne(OrderHistory)
+
 UserLogin.hasOne(UserInfo)
 UserInfo.belongsTo(UserLogin)
 
@@ -30,6 +35,8 @@ UserInfo.belongsTo(UserLogin)
 module.exports = {
   PurchaseActivity,
   OrderHistory,
+  Toy,
+  Review,
   UserLogin,
   UserInfo
 }

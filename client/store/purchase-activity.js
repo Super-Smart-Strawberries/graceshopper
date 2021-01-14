@@ -11,18 +11,20 @@ const initialState = {}
 /**
  * ACTION CREATORS
  */
-const getActivity = activity => ({type: GET_QUANTITY, activity})
+const getActivity = activity => ({type: GET_ACTIVITY, activity})
 
 /**
  * THUNK CREATORS
  */
-export const fetchActivity = () => async disptach => {
+export const fetchActivity = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/purchaseActivity')
+    dispatch(getActivity(data))
   } catch (error) {
     console.log(error)
   }
 }
+
 /**
  * REDUCER
  */

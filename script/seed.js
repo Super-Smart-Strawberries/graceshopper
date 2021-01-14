@@ -1,7 +1,26 @@
 'use strict'
 
 const db = require('../server/db')
-const {UserLogin} = require('../server/db/models')
+
+const {
+  UserLogin,
+  Toy,
+  Review,
+  PurchaseActivity,
+  OrderHistory
+} = require('../server/db/models')
+
+const toy = {
+  name: 'Lovely Duckly',
+  description: 'Rubber Ducky',
+  price: 150.98,
+  inventory: 15
+}
+
+const activity = {
+  isOrdered: false,
+  quantity: 2
+}
 
 async function seed() {
   await db.sync({force: true})
@@ -11,6 +30,10 @@ async function seed() {
     UserLogin.create({email: 'cody@email.com', password: '123'}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
+
+  const lovelyDuckly = await Toy.create(toy)
+  const activityOne = await PurchaseActivity.create(activity)
+  await activityOne.addToy(lovelyDuckly)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

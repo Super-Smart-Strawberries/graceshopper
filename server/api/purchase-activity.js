@@ -6,7 +6,7 @@ router.get('/', async (req, res, next) => {
   try {
     const cartInfo = await PurchaseActivity.findAll({
       where: {
-        status: false
+        isOrdered: false
       },
       include: [Toy]
     })
@@ -17,7 +17,7 @@ router.get('/', async (req, res, next) => {
 })
 
 router.delete(
-  '/deletePurchase/:purchaseActivityId/:toyId',
+  '/delete-purchase/:purchase-activityId/:toyId',
   async (req, res, next) => {
     try {
       const {purchaseActivityId, toyId} = req.params
@@ -42,7 +42,7 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put(
-  '/updatePurchase/:purchaseActivityId/:toyId',
+  '/update-purchase/:purchase-activityId/:toyId',
   async (req, res, next) => {
     try {
       const {purchaseActivityId, toyId} = req.params

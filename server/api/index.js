@@ -2,7 +2,9 @@ const router = require('express').Router()
 module.exports = router
 
 router.use('/users', require('./users'))
-router.use('/purchaseActivity', require('./purchase-activity'))
+router.use('/toys', require('./toys'))
+router.use('/reviews', require('./reviews'))
+router.use('/purchase-activity', require('./purchase-activity'))
 // router.use('/orderHistory', require('./order-history'))
 
 router.use((req, res, next) => {
