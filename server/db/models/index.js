@@ -10,11 +10,11 @@ const UserInfo = require('./user-info')
  *    BlogPost.belongsTo(User)
  */
 
-// PurchaseActivity.belongsTo(UserLogin)
-// UserLogin.hasOne(PurchaseActivity)
+PurchaseActivity.belongsTo(UserLogin)
+UserLogin.hasOne(PurchaseActivity)
 
-// PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
-// Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
+PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
+Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
 
 OrderHistory.belongsTo(PurchaseActivity)
 PurchaseActivity.hasOne(OrderHistory)

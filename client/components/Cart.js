@@ -1,17 +1,21 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {fetchActivity} from '../store/purchase-activity'
 
 //cart items will be held in state
 
 class Cart extends React.Component {
-  constructor(props) {
-    super(props)
+  componentDidMount() {
+    this.props.getActivity()
   }
 
   render() {
-    let cartItems = this.props.items.length ? (
-      this.props.items.map(item => {
+    const {activity} = this.props
+    const toys = activity.toys //to get the toys array insidet activity object
+
+    let cartItems = toys.length ? (
+      toys.map(item => {
         return (
           <li key={item.id} className="cart-list">
             <div className="item-img">
@@ -22,9 +26,6 @@ class Cart extends React.Component {
               <p>{item.desc}</p>
               <p>
                 <b>Price: {item.price}$</b>
-              </p>
-              <p>
-                <b>Quantity: {item.quantity}</b>
               </p>
             </div>
           </li>
@@ -61,8 +62,13 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    items: state.cartItems
+    items: state.activity
+  }
+}
+const mapDispatch = dispatch => {
+  return {
+    getActivity: () => dispatch(fetchActivity())
   }
 }
 
-export default connect(mapStateToProps)(Cart)
+export default connect(mapStateToProps, mapDispatch)(Cart)
