@@ -2,7 +2,7 @@
 
 const {expect} = require('chai')
 const db = require('../index')
-const User = db.model('user')
+const UserLogin = db.model('userLogin')
 
 describe('User model', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('User model', () => {
       let cody
 
       beforeEach(async () => {
-        cody = await User.create({
+        cody = await UserLogin.create({
           email: 'cody@puppybook.com',
           password: 'bones'
         })
