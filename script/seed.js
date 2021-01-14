@@ -1,13 +1,16 @@
 'use strict'
 
 const db = require('../server/db')
-const {UserLogin} = require('../server/db/models')
+
+const {UserLogin, Toy, Review} = require('../server/db/models')
+
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
   const users = await Promise.all([
+
     UserLogin.create({email: 'cody@email.com', password: '123'}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
