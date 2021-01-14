@@ -12,8 +12,8 @@ const OrderHistory = require('./order-history')
 // PurchaseActivity.belongsTo(UserLogin)
 // UserLogin.hasOne(PurchaseActivity)
 
-PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
-Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
+// PurchaseActivity.hasMany(Toy, {through: 'toypurchases'})
+// Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
 
 OrderHistory.belongsTo(PurchaseActivity)
 PurchaseActivity.hasOne(OrderHistory)
