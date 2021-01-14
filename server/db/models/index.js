@@ -1,6 +1,7 @@
-const User = require('./user')
 const PurchaseActivity = require('./purchase-activity')
 const OrderHistory = require('./order-history')
+const UserLogin = require('./user-login')
+const UserInfo = require('./user-info')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -17,6 +18,8 @@ const OrderHistory = require('./order-history')
 
 OrderHistory.belongsTo(PurchaseActivity)
 PurchaseActivity.hasOne(OrderHistory)
+UserLogin.hasOne(UserInfo)
+UserInfo.belongsTo(UserLogin)
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
@@ -25,7 +28,8 @@ PurchaseActivity.hasOne(OrderHistory)
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User,
   PurchaseActivity,
-  OrderHistory
+  OrderHistory,
+  UserLogin,
+  UserInfo
 }
