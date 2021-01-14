@@ -13,29 +13,30 @@ class Cart extends React.Component {
   render() {
     const {items} = this.props
     const toys = items.toys //to get the toys array insidet activity object
-
-    let cartItems = toys.length ? (
-      toys.map(item => {
-        return (
-          <li key={item.id} className="cart-list">
-            <div className="item-img">
-              <img src={item.ImageUrl} />
-            </div>
-            <div className="item-desc">
-              <span className="item-name">{item.name}</span>
-              <p>{item.desc}</p>
-              <p>
-                <b>Price: {item.price}$</b>
-              </p>
-            </div>
-          </li>
-        )
-      })
-    ) : (
-      <div>
-        <p>Your Cart is Empty :C</p>
-      </div>
-    )
+    console.log(this.props)
+    let cartItems =
+      toys !== undefined ? (
+        toys.map(item => {
+          return (
+            <li key={item.id} className="cart-list">
+              <div className="item-img">
+                <img src={item.ImageUrl} />
+              </div>
+              <div className="item-desc">
+                <span className="item-name">{item.name}</span>
+                <p>{item.desc}</p>
+                <p>
+                  <b>Price: {item.price}$</b>
+                </p>
+              </div>
+            </li>
+          )
+        })
+      ) : (
+        <div>
+          <p>Your Cart is Empty :C</p>
+        </div>
+      )
 
     return (
       <>

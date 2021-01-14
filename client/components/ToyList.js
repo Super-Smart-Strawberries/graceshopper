@@ -10,6 +10,7 @@ class ToyList extends Component {
 
   render() {
     const {toys} = this.props
+    console.log(this.props)
     return (
       <div>
         <ul>
@@ -19,7 +20,7 @@ class ToyList extends Component {
             toys.map(toy => (
               <li key={toy.id}>
                 <div>
-                  <img src={toy.image} />
+                  <img src={toy.image} width="50" height="100" />
                 </div>
                 <div>
                   <Link to={`/toys/${toy.id}`}>{toy.name}</Link>

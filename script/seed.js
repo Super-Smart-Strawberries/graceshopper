@@ -17,9 +17,21 @@ const toy = {
   inventory: 15
 }
 
+const toy2 = {
+  name: 'angry ducky',
+  description: 'heated',
+  price: 1000.99,
+  inventory: 30
+}
+
 const activity = {
   isOrdered: false,
   quantity: 2
+}
+
+const activity2 = {
+  isOrdered: false,
+  quantity: 1
 }
 
 async function seed() {
@@ -32,8 +44,9 @@ async function seed() {
   ])
 
   const lovelyDuckly = await Toy.create(toy)
+  const angryDucky = await Toy.create(toy2)
   const activityOne = await PurchaseActivity.create(activity)
-  await activityOne.addToy(lovelyDuckly)
+  const activityTwo = await PurchaseActivity.create(activity2)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

@@ -5,10 +5,6 @@ const PurchaseActivity = db.define('purchase-activity', {
   isOrdered: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  },
-  quantity: {
-    type: Sequelize.INTEGER,
-    defaultValue: 1
   }
 })
 
