@@ -17,9 +17,6 @@ Review.belongsTo(Toy)
 PurchaseActivity.belongsTo(UserLogin)
 UserLogin.hasOne(PurchaseActivity)
 
-PurchaseActivity.belongsToMany(Toy, {through: 'toypurchases'})
-Toy.belongsToMany(PurchaseActivity, {through: 'toypurchases'})
-
 OrderHistory.belongsTo(PurchaseActivity)
 PurchaseActivity.hasOne(OrderHistory)
 
