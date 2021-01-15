@@ -12,12 +12,12 @@ const initialState = {}
 /**
  * ACTION CREATORS
  */
-const getReviews = (reviews) => ({type: GET_REVIEWS, reviews})
+const getReviews = reviews => ({type: GET_REVIEWS, reviews})
 
 /**
  * THUNK CREATORS
  */
-export const fetchReviews = () => async (dispatch) => {
+export const fetchReviews = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/reviews')
     dispatch(getReviews(data))
@@ -29,7 +29,7 @@ export const fetchReviews = () => async (dispatch) => {
 /**
  * REDUCER
  */
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case GET_REVIEWS:
       return action.reviews

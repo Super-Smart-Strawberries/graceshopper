@@ -7,7 +7,7 @@ import {ToyList} from './ToyList'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>TOY STORIES</h1>
     <nav>
       {isLoggedIn ? (
         <div>

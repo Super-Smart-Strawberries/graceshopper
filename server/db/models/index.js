@@ -1,9 +1,7 @@
-
 const UserLogin = require('./user-login')
 const UserInfo = require('./user-info')
 const Toy = require('./toys')
 const Review = require('./reviews')
-
 
 /**
  * If we had any associations to make, this would be a great place to put them!
