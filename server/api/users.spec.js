@@ -6,7 +6,7 @@ const db = require('../db')
 const app = require('../index')
 const UserLogin = db.model('userLogin')
 
-describe('User routes', () => {
+describe('routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
@@ -22,9 +22,9 @@ describe('User routes', () => {
       })
     })
 
-    it('GET /api/users', async () => {
+    it('GET /api/toys', async () => {
       const res = await request(app)
-        .get('/api/users')
+        .get('/api/toys')
         .expect(200)
 
       expect(res.body).to.be.an('array')
