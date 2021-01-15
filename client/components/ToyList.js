@@ -10,7 +10,6 @@ class ToyList extends Component {
 
   render() {
     const {toys} = this.props
-    console.log('this.props from ToyList: ', this.props)
     return (
       <div>
         <ul>
