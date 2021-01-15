@@ -4,23 +4,25 @@ const {expect} = require('chai')
 const request = require('supertest')
 const db = require('../db')
 const app = require('../index')
-const User = db.model('user')
+const UserLogin = db.model('userLogin')
 
 describe('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
+  describe('/api/toys/', () => {
     const codysEmail = 'cody@puppybook.com'
+    const codysPassword = '122455'
 
     beforeEach(() => {
-      return User.create({
-        email: codysEmail
+      return UserLogin.create({
+        email: codysEmail,
+        password: codysPassword
       })
     })
 
-    it('GET /api/users', async () => {
+    it('GET /api/toys', async () => {
       const res = await request(app)
         .get('/api/users')
         .expect(200)

@@ -4,12 +4,36 @@ class AddToCart extends Component {
   constructor() {
     super()
     this.state = {
-      toyQty: null,
-      addToCart: false
+      toyQty: null
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+  handleSubmit(evt) {
+    const {id} = this.props.singleToy
+    evt.preventDefault()
+    console.log(`${this.state.toyQty} quantities of ToyId ${id} added to cart`)
+    this.setState({
+      toyQty: null
+    })
   }
   render() {
-    const {singleToy, addToCart} = this.props
+    const {singleToy} = this.props
+
+    let qtyNum = []
+    for (let i = 1; i <= 50; i++) {
+      qtyNum.push(
+        <option key={i} value={i}>
+          Qty: {i}
+        </option>
+      )
+    }
+
     return (
       <div>
         {singleToy.inventory < 10 ? (
@@ -18,13 +42,14 @@ class AddToCart extends Component {
           <div>IN STOCK</div>
         )}
         <div>
-          <form onSubmit={addToCart}>
-            <select name="Qty" type="dropdown" value={this.state.toyQty}>
-              <option value="1">Qty: 1</option>
-              <option value="2">Qty: 2</option>
-              <option value="3">Qty: 3</option>
-              <option value="4">Qty: 4</option>
-              <option value="5">Qty: 5</option>
+          <form onSubmit={this.handleSubmit}>
+            <select
+              name="toyQty"
+              type="number"
+              value={this.state.value}
+              onChange={this.handleChange}
+            >
+              {qtyNum}
             </select>
             <button type="submit">Add To Cart</button>
           </form>

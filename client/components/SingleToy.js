@@ -1,34 +1,37 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleToy} from '../store/singleToy'
-import {setCart} from '../store/cart'
 import AddToCart from './AddToCart'
 
 class SingleToy extends Component {
-  addToCart(toy) {
-    this.setCart(toy)
-    // must add this to user session.
-  }
   componentDidMount() {
     this.props.setSingleToy(this.props.match.params.toyId)
   }
 
   render() {
     const {singleToy} = this.props
+    const {reviews} = singleToy
+    console.log('this.props from singleToy: ', this.props) // to be deleted
 
     return (
       <div>
-        <div>{singleToy.name}</div>
+        <h2>{singleToy.name}</h2>
         <div>{singleToy.description}</div>
-        <div>{singleToy.price}</div>
-        <div>{singleToy.image}</div>
-        <div>{singleToy.rating}</div>
+        <div>${singleToy.price}</div>
+        <img src={singleToy.image} />
+        {reviews
+          ? reviews.map(review => (
+              <ul key={review.id}>
+                <li>Rating: {review.ratings}</li>
+                <li>{review.description}</li>
+              </ul>
+            ))
+          : null}
         {singleToy.inventory === 0 ? (
           <div>OUT OF STOCK</div>
         ) : (
-          <AddToCart singleToy={singleToy} addToCart={this.addToCart} />
+          <AddToCart singleToy={singleToy} />
         )}
-        <div>{singleToy.review}</div>
       </div>
     )
   }
@@ -39,8 +42,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  setSingleToy: id => dispatch(fetchSingleToy(id)),
-  setCart: id => dispatch(setCart(id))
+  setSingleToy: id => dispatch(fetchSingleToy(id))
 })
 
 export default connect(mapState, mapDispatch)(SingleToy)
