@@ -6,7 +6,9 @@ import user from './user'
 import users from './users'
 import userInfo from './userInfo'
 
-const reducer = combineReducers({user, users, userInfo})
+
+const reducer = combineReducers({user, users, userInfo, toys, singleToy})
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -16,3 +18,5 @@ export default store
 export * from './user'
 export * from './users'
 export * from './userInfo'
+export * from './toys'
+export * from './singleToy'

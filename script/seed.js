@@ -1,7 +1,27 @@
 'use strict'
 
 const db = require('../server/db')
-const {UserLogin} = require('../server/db/models')
+
+const {UserLogin, Toy, Review} = require('../server/db/models')
+
+const toyOne = {
+  name: 'rubber ducky',
+  description: 'the one friend on your desk',
+  price: 15.5,
+  image:
+    'https://cdn.shopify.com/s/files/1/0012/4482/3632/products/duck_1200x.jpg?v=1583533109',
+  inventory: 20
+}
+
+const review = {
+  ratings: 5,
+  description: 'this ducky is an amazing companion for your coding.'
+}
+
+const reviewTwo = {
+  ratings: 1,
+  description: 'this is a waste of money.'
+}
 
 async function seed() {
   await db.sync({force: true})
@@ -11,6 +31,12 @@ async function seed() {
     UserLogin.create({email: 'cody@email.com', password: '123', isAdmin: true}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
+
+  const toy1 = await Toy.create(toyOne)
+  const review1 = await Review.create(review)
+  const review2 = await Review.create(reviewTwo)
+  await toy1.addReview(review1)
+  await toy1.addReview(review2)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

@@ -11,7 +11,7 @@ describe('routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/', () => {
+  describe('/api/toys/', () => {
     const codysEmail = 'cody@puppybook.com'
     const codysPassword = '122455'
 
