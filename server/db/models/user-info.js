@@ -41,8 +41,8 @@ const UserInfo = db.define('userInfo', {
     }
   },
   DOB: {
-    type: Sequelize.DATEONLY,
-    allowNull: false
+    type: Sequelize.DATEONLY
+    // allowNull: false
   }
 })
 

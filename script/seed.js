@@ -1,38 +1,17 @@
 'use strict'
 
 const db = require('../server/db')
-
+const reviews = require('./reviews')
+const toys = require('./toys')
+const userInfo = require('./userInfo')
 const {
   UserLogin,
   Toy,
   Review,
   PurchaseActivity,
-  OrderHistory
+  OrderItem,
+  UserInfo
 } = require('../server/db/models')
-
-const toy = {
-  name: 'Lovely Duckly',
-  description: 'Rubber Ducky',
-  price: 150.98,
-  inventory: 15
-}
-
-const toy2 = {
-  name: 'angry ducky',
-  description: 'heated',
-  price: 1000.99,
-  inventory: 30
-}
-
-const activity = {
-  isOrdered: false,
-  quantity: 2
-}
-
-const activity2 = {
-  isOrdered: false,
-  quantity: 1
-}
 
 const toyOne = {
   name: 'rubber ducky',
@@ -53,6 +32,36 @@ const reviewTwo = {
   description: 'this is a waste of money.'
 }
 
+const toyTwo = {
+  name: 'Lovely Duckly',
+  description: 'Rubber Ducky',
+  price: 150.98,
+  inventory: 15
+}
+
+const toyThree = {
+  name: 'angry ducky',
+  description: 'heated',
+  price: 1000.99,
+  inventory: 30
+}
+
+const activityOne = {
+  isOrdered: false
+}
+
+const activityTwo = {
+  isOrdered: false
+}
+
+const orderItemOne = {
+  quantity: 2
+}
+
+const orderItemTwo = {
+  quantity: 4
+}
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -61,18 +70,26 @@ async function seed() {
     UserLogin.create({email: 'cody@email.com', password: '123'}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
+  const createdToys = await Toy.bulkCreate(toys)
+  const createdReviews = await Review.bulkCreate(reviews)
+  const createdUserInfo = await UserInfo.bulkCreate(userInfo)
+  const lovelyDuckly = await Toy.create(toyTwo)
+  // const cartItemOne = await OrderItem.create(orderItemOne)
+  // const activity = await PurchaseActivity.create(activityOne)
+  // const cartOne = await cartItemOne.setToy(lovelyDuckly)
+  // await cartOne.setPurchaseActivity(activity)
+  // // console.log(Object.keys(OrderItem.prototype)) // to be deleted
 
-  const lovelyDuckly = await Toy.create(toy)
-  const angryDucky = await Toy.create(toy2)
-  const activityOne = await PurchaseActivity.create(activity)
-  await activityOne.addToy(lovelyDuckly)
-  const activityTwo = await PurchaseActivity.create(activity2)
+  const toy2 = await Toy.create(toyThree)
+  // const cartItemTwo = await OrderItem.create(orderItemTwo)
+  // const cartTwo = await cartItemTwo.setToy(toy2)
+  // await cartTwo.setPurchaseActivity(activity)
 
   const toy1 = await Toy.create(toyOne)
-  const review1 = await Review.create(review)
-  const review2 = await Review.create(reviewTwo)
-  await toy1.addReview(review1)
-  await toy1.addReview(review2)
+  // const review1 = await Review.create(review)
+  // const review2 = await Review.create(reviewTwo)
+  // await toy1.setReview(reviews[0])
+  // await toy1.setReview(reviews[3])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
