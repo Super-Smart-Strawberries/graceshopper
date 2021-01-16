@@ -3,8 +3,6 @@ const pkg = require('../../package.json')
 
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
 
-//heroku config:set DEPLOY=strawberries (setting env. variable) => process.env
-//if(process.env.DEPLOY === ‘strawberries’) { db= SSL } else { db = NO_SSL}
 let db
 
 if (process.env.DEPLOY === 'true') {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {ToyList} from './ToyList'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
@@ -23,6 +22,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/toys">All Toys!</Link>
+          <Link to="/purchase-activity">Cart</Link>
         </div>
       )}
     </nav>
