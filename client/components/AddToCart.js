@@ -4,7 +4,7 @@ class AddToCart extends Component {
   constructor() {
     super()
     this.state = {
-      toyQty: null
+      toyQty: 1
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -19,7 +19,7 @@ class AddToCart extends Component {
     evt.preventDefault()
     console.log(`${this.state.toyQty} quantities of ToyId ${id} added to cart`)
     this.setState({
-      toyQty: null
+      toyQty: 1
     })
   }
   render() {
