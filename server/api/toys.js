@@ -18,10 +18,10 @@ router.get('/:toyId', async (req, res, next) => {
     const toy = await Toy.findByPk(req.params.toyId, {
       include: [
         {
-          model: Review,
-          where: {
-            toyId: req.params.toyId
-          }
+          model: Review
+          // where: {
+          //   toyId: req.params.toyId
+          // }
         }
       ]
     })

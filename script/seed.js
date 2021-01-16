@@ -32,19 +32,19 @@ const reviewTwo = {
   description: 'this is a waste of money.'
 }
 
-const toyTwo = {
-  name: 'Lovely Duckly',
-  description: 'Rubber Ducky',
-  price: 150.98,
-  inventory: 15
-}
+// const toyTwo = {
+//   name: 'Lovely Duckly',
+//   description: 'Rubber Ducky',
+//   price: 150.98,
+//   inventory: 15
+// }
 
-const toyThree = {
-  name: 'angry ducky',
-  description: 'heated',
-  price: 1000.99,
-  inventory: 30
-}
+// const toyThree = {
+//   name: 'angry ducky',
+//   description: 'heated',
+//   price: 1000.99,
+//   inventory: 30
+// }
 
 const activityOne = {
   isOrdered: false
