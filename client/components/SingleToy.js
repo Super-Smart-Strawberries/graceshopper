@@ -11,7 +11,7 @@ class SingleToy extends Component {
   render() {
     const {singleToy} = this.props
     const {reviews} = singleToy
-
+    console.log('this.props from SingleToy: ', this.props) // to be deleted
     return (
       <div>
         <h2>{singleToy.name}</h2>
