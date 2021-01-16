@@ -70,22 +70,23 @@ async function seed() {
     UserLogin.create({email: 'cody@email.com', password: '123'}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
+  //bulk create data
   const createdToys = await Toy.bulkCreate(toys)
   const createdReviews = await Review.bulkCreate(reviews)
   const createdUserInfo = await UserInfo.bulkCreate(userInfo)
-  const lovelyDuckly = await Toy.create(toyTwo)
+  // const lovelyDuckly = await Toy.create(toyTwo)
   // const cartItemOne = await OrderItem.create(orderItemOne)
   // const activity = await PurchaseActivity.create(activityOne)
   // const cartOne = await cartItemOne.setToy(lovelyDuckly)
   // await cartOne.setPurchaseActivity(activity)
   // // console.log(Object.keys(OrderItem.prototype)) // to be deleted
-
-  const toy2 = await Toy.create(toyThree)
+  //bulk associations
+  // const toy2 = await Toy.create(toyThree)
   // const cartItemTwo = await OrderItem.create(orderItemTwo)
   // const cartTwo = await cartItemTwo.setToy(toy2)
   // await cartTwo.setPurchaseActivity(activity)
 
-  const toy1 = await Toy.create(toyOne)
+  // const toy1 = await Toy.create(toyOne)
   // const review1 = await Review.create(review)
   // const review2 = await Review.create(reviewTwo)
   // await toy1.setReview(reviews[0])
