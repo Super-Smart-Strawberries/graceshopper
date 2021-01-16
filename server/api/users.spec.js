@@ -24,7 +24,7 @@ describe('routes', () => {
 
     it('GET /api/users', async () => {
       const res = await request(app)
-        .get('/api/toys')
+        .get('/api/users')
         .expect(200 || 401)
 
       expect(res.body).to.be.an('array')
