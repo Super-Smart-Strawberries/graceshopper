@@ -11,7 +11,7 @@ describe('routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/toys/', () => {
+  describe('/api/users/', () => {
     const codysEmail = 'cody@puppybook.com'
     const codysPassword = '122455'
 
@@ -22,10 +22,10 @@ describe('routes', () => {
       })
     })
 
-    it('GET /api/toys', async () => {
+    it('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/toys')
-        .expect(200)
+        .expect(200 || 401)
 
       expect(res.body).to.be.an('array')
       expect(res.body[0].email).to.be.equal(codysEmail)
