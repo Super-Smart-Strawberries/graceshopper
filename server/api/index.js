@@ -10,6 +10,8 @@ const isAdmin = (req, res, next) => {
 router.use('/users', require('./users'))
 router.use('/toys', require('./toys'))
 router.use('/reviews', require('./reviews'))
+router.use('/purchase-activity', require('./purchase-activity'))
+// router.use('/orderHistory', require('./order-history'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

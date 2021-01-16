@@ -15,7 +15,9 @@ const Toy = db.define('toy', {
     defaultValue: 10.0
   },
   image: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue:
+      'https://images-na.ssl-images-amazon.com/images/I/51VXgNZFIoL._AC_SL1424_.jpg'
   },
   inventory: {
     type: Sequelize.INTEGER
