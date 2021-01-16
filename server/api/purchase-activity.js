@@ -2,35 +2,18 @@ const router = require('express').Router()
 const {PurchaseActivity, Toy, OrderItem} = require('../db/models')
 module.exports = router
 
-// router.get('/:id', async (req, res, next) => {
-//   try {
-//     const cartInfo = await PurchaseActivity.findAll({
-//       where: {
-//         isOrdered: false,
-//       },
-//       include: [
-//         {
-//           model: Toy,
-//           through: {
-//             where: {
-//               purchaseActivityId: req.params.id,
-//             },
-//           },
-//         },
-//       ],
-//     })
-//     res.send(cartInfo)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
 router.get('/:id', async (req, res, next) => {
   try {
     const singleCartInfo = await PurchaseActivity.findByPk(req.params.id, {
       where: {
         isOrdered: false
       },
-      include: [OrderItem]
+      include: [
+        {
+          model: OrderItem,
+          include: [Toy]
+        }
+      ]
     })
     res.send(singleCartInfo)
   } catch (err) {

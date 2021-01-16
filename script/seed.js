@@ -7,32 +7,8 @@ const {
   Toy,
   Review,
   PurchaseActivity,
-  OrderHistory
+  OrderItem
 } = require('../server/db/models')
-
-const toy = {
-  name: 'Lovely Duckly',
-  description: 'Rubber Ducky',
-  price: 150.98,
-  inventory: 15
-}
-
-const toy2 = {
-  name: 'angry ducky',
-  description: 'heated',
-  price: 1000.99,
-  inventory: 30
-}
-
-const activity = {
-  isOrdered: false,
-  quantity: 2
-}
-
-const activity2 = {
-  isOrdered: false,
-  quantity: 1
-}
 
 const toyOne = {
   name: 'rubber ducky',
@@ -53,6 +29,36 @@ const reviewTwo = {
   description: 'this is a waste of money.'
 }
 
+const toyTwo = {
+  name: 'Lovely Duckly',
+  description: 'Rubber Ducky',
+  price: 150.98,
+  inventory: 15
+}
+
+const toyThree = {
+  name: 'angry ducky',
+  description: 'heated',
+  price: 1000.99,
+  inventory: 30
+}
+
+const activityOne = {
+  isOrdered: false
+}
+
+const activityTwo = {
+  isOrdered: false
+}
+
+const orderItemOne = {
+  quantity: 2
+}
+
+const orderItemTwo = {
+  quantity: 4
+}
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -62,11 +68,17 @@ async function seed() {
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
 
-  const lovelyDuckly = await Toy.create(toy)
-  const angryDucky = await Toy.create(toy2)
-  const activityOne = await PurchaseActivity.create(activity)
-  await activityOne.addToy(lovelyDuckly)
-  const activityTwo = await PurchaseActivity.create(activity2)
+  const lovelyDuckly = await Toy.create(toyTwo)
+  const cartItemOne = await OrderItem.create(orderItemOne)
+  const activity = await PurchaseActivity.create(activityOne)
+  const cartOne = await cartItemOne.setToy(lovelyDuckly)
+  await cartOne.setPurchaseActivity(activity)
+  // console.log(Object.keys(OrderItem.prototype)) // to be deleted
+
+  const toy2 = await Toy.create(toyThree)
+  const cartItemTwo = await OrderItem.create(orderItemTwo)
+  const cartTwo = await cartItemTwo.setToy(toy2)
+  await cartTwo.setPurchaseActivity(activity)
 
   const toy1 = await Toy.create(toyOne)
   const review1 = await Review.create(review)

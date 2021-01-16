@@ -24,8 +24,8 @@ PurchaseActivity.hasOne(OrderHistory)
 UserLogin.hasOne(UserInfo)
 UserInfo.belongsTo(UserLogin)
 
-// OrderItem.hasOne(Toy)
 OrderItem.belongsTo(Toy)
+
 PurchaseActivity.hasMany(OrderItem)
 OrderItem.belongsTo(PurchaseActivity)
 
