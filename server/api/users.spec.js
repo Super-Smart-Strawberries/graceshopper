@@ -6,12 +6,12 @@ const db = require('../db')
 const app = require('../index')
 const UserLogin = db.model('userLogin')
 
-describe('User routes', () => {
+describe('routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  describe('/api/toys/', () => {
+  describe('/api/users/', () => {
     const codysEmail = 'cody@puppybook.com'
     const codysPassword = '122455'
 
@@ -22,13 +22,13 @@ describe('User routes', () => {
       })
     })
 
-    it('GET /api/toys', async () => {
+    it('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/users')
-        .expect(200)
+        .expect(401)
 
-      expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(codysEmail)
+      // expect(res.body).to.be.an('array')
+      // expect(res.body[0].email).to.be.equal(codysEmail)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
