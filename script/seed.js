@@ -1,9 +1,15 @@
 'use strict'
 
 const db = require('../server/db')
-const reviews = require('./reviews')
-const toys = require('./toys')
-const userInfo = require('./userInfo')
+const {
+  reviews,
+  toys,
+  userInfo,
+  orderItems,
+  purchaseActivities,
+  userLogin
+} = require('./seed-data')
+
 const {
   UserLogin,
   Toy,
@@ -19,6 +25,19 @@ const orderItemOne = {
   toyId: 3,
   purchaseActivityId: 1
 }
+const toyTwo = {
+  name: 'Lovely Duckly',
+  description: 'Rubber Ducky',
+  price: 150.98,
+  inventory: 15
+}
+
+const toyThree = {
+  name: 'angry ducky',
+  description: 'heated',
+  price: 1000.99,
+  inventory: 30
+}
 
 const activityOne = {
   isOrdered: false,
@@ -29,6 +48,10 @@ const activityTwo = {
   userLoginId: 2
 }
 
+const orderItemTwo = {
+  quantity: 4
+}
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -37,6 +60,7 @@ async function seed() {
     UserLogin.create({email: 'cody@email.com', password: '123', isAdmin: true}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
+
   //bulk create data
   const createdToys = await Toy.bulkCreate(toys)
   const createdReviews = await Review.bulkCreate(reviews)
@@ -45,6 +69,23 @@ async function seed() {
   const activity2 = await PurchaseActivity.create(activityTwo)
   const item1 = await OrderItem.create(orderItemOne)
   // await activity1.addOrderItem
+  await Toy.bulkCreate(toys)
+  await Review.bulkCreate(reviews)
+  await UserInfo.bulkCreate(userInfo)
+  // await OrderItem.bulkCreate(orderItems)
+  // await UserLogin.bulkCreate(userLogin)
+  // await PurchaseActivity.bulkCreate(purchaseActivities)
+
+  const lovelyDuckly = await Toy.create(toyTwo)
+  const cartItemOne = await OrderItem.create(orderItemOne)
+  const activity = await PurchaseActivity.create(activityOne)
+  const cartOne = await cartItemOne.setToy(lovelyDuckly)
+  await cartOne.setPurchaseActivity(activity)
+
+  const toy2 = await Toy.create(toyThree)
+  const cartItemTwo = await OrderItem.create(orderItemTwo)
+  const cartTwo = await cartItemTwo.setToy(toy2)
+  await cartTwo.setPurchaseActivity(activity)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

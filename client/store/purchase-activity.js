@@ -24,9 +24,9 @@ const getSingleActivity = singleActivity => ({
 })
 const addOrderItem = orderItem => ({type: ADD_ORDER_ITEM, orderItem})
 
-const updatedOrderItem = (update, id) => ({
+const updatedOrderItem = (qty, id) => ({
   type: UPDATE_ORDER_ITEM,
-  update,
+  qty,
   id
 })
 
@@ -61,7 +61,7 @@ export const updateOrderItem = (orderItemId, update) => async dispatch => {
       `/api/order-item/update/${orderItemId}`,
       update
     )
-    dispatch(updatedOrderItem(data, orderItemId))
+    dispatch(updatedOrderItem(data.quantity, orderItemId))
   } catch (err) {
     console.log(err)
   }
@@ -98,7 +98,8 @@ export default function activityReducer(state = initialState, action) {
       return {
         ...state,
         orderItems: state.orderItems.map(
-          item => (item.id === action.id ? action.update : item)
+          item =>
+            item.id === action.id ? {...item, quantity: action.qty} : item
         )
       }
     case REMOVE_ORDER_ITEM:
