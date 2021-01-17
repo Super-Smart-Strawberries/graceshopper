@@ -1,5 +1,11 @@
 const router = require('express').Router()
-module.exports = router
+
+const isAdmin = (req, res, next) => {
+  console.log('REQQQQQQQQ', router.get.req)
+  req.user.isAdmin
+    ? next()
+    : res.status(401).send('You do not have the permission to view this page')
+}
 
 router.use('/users', require('./users'))
 router.use('/toys', require('./toys'))
@@ -13,3 +19,5 @@ router.use((req, res, next) => {
   error.status = 404
   next(error)
 })
+
+module.exports = router

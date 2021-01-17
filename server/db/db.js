@@ -27,7 +27,6 @@ if (process.env.DEPLOY === 'true') {
     }
   )
 }
-
 module.exports = db
 
 // This is a global Mocha hook used for resource cleanup.
