@@ -21,22 +21,6 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.delete(
-  '/delete-purchase/:purchase-activityId/:toyId',
-  async (req, res, next) => {
-    try {
-      const {purchaseActivityId, toyId} = req.params
-      const activity = await PurchaseActivity.findOne({
-        where: {id: purchaseActivityId}
-      })
-      await activity.removeToy([toyId])
-      res.sendStatus(204).end()
-    } catch (err) {
-      next(err)
-    }
-  }
-)
-
 router.post('/', async (req, res, next) => {
   try {
     const addToy = await PurchaseActivity.create(req.body)
@@ -45,24 +29,3 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
-
-router.put(
-  '/update-purchase/:purchase-activityId/:toyId',
-  async (req, res, next) => {
-    try {
-      const {purchaseActivityId, toyId} = req.params
-      const updateActivity = await PurchaseActivity.findByPk(purchaseActivityId)
-      const updated = await updateActivity.update(
-        {
-          where: {
-            toyId: toyId
-          }
-        },
-        req.body
-      )
-      res.send(updated)
-    } catch (err) {
-      next(err)
-    }
-  }
-)

@@ -34,6 +34,11 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
             <Route exact path="/users" component={AllUsers} />
             <Route exact path="/users/:userId" component={SingleUser} />
+            <Route
+              exact
+              path="/users/:userId/purchase-activity/:id"
+              component={Cart}
+            />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
