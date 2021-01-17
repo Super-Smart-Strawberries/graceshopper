@@ -1,9 +1,15 @@
 'use strict'
 
 const db = require('../server/db')
-const reviews = require('./reviews')
-const toys = require('./toys')
-const userInfo = require('./userInfo')
+const {
+  reviews,
+  toys,
+  userInfo,
+  orderItems,
+  purchaseActivities,
+  userLogin
+} = require('./seed-data')
+
 const {
   UserLogin,
   Toy,
@@ -12,25 +18,6 @@ const {
   OrderItem,
   UserInfo
 } = require('../server/db/models')
-
-const toyOne = {
-  name: 'rubber ducky',
-  description: 'the one friend on your desk',
-  price: 15.5,
-  image:
-    'https://cdn.shopify.com/s/files/1/0012/4482/3632/products/duck_1200x.jpg?v=1583533109',
-  inventory: 20
-}
-
-const review = {
-  ratings: 5,
-  description: 'this ducky is an amazing companion for your coding.'
-}
-
-const reviewTwo = {
-  ratings: 1,
-  description: 'this is a waste of money.'
-}
 
 const toyTwo = {
   name: 'Lovely Duckly',
@@ -50,10 +37,6 @@ const activityOne = {
   isOrdered: false
 }
 
-const activityTwo = {
-  isOrdered: false
-}
-
 const orderItemOne = {
   quantity: 2
 }
@@ -70,17 +53,21 @@ async function seed() {
     UserLogin.create({email: 'cody@email.com', password: '123', isAdmin: true}),
     UserLogin.create({email: 'murphy@email.com', password: '123'})
   ])
+
   //bulk create data
-  const createdToys = await Toy.bulkCreate(toys)
-  const createdReviews = await Review.bulkCreate(reviews)
-  const createdUserInfo = await UserInfo.bulkCreate(userInfo)
+  await Toy.bulkCreate(toys)
+  await Review.bulkCreate(reviews)
+  await UserInfo.bulkCreate(userInfo)
+  // await OrderItem.bulkCreate(orderItems)
+  // await UserLogin.bulkCreate(userLogin)
+  // await PurchaseActivity.bulkCreate(purchaseActivities)
+
   const lovelyDuckly = await Toy.create(toyTwo)
   const cartItemOne = await OrderItem.create(orderItemOne)
   const activity = await PurchaseActivity.create(activityOne)
   const cartOne = await cartItemOne.setToy(lovelyDuckly)
   await cartOne.setPurchaseActivity(activity)
-  // console.log(Object.keys(OrderItem.prototype)) // to be deleted
-  // bulk associations
+
   const toy2 = await Toy.create(toyThree)
   const cartItemTwo = await OrderItem.create(orderItemTwo)
   const cartTwo = await cartItemTwo.setToy(toy2)

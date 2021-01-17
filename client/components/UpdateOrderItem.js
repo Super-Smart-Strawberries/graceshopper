@@ -10,8 +10,6 @@ const UpdateOrderItem = props => {
     props.update(orderItem.id, {quantity: +event.target.value})
   }
 
-  console.log('props from UpdateOrderItem: ', props)
-
   let qtyNum = []
   for (let i = 1; i <= 50; i++) {
     qtyNum.push(
