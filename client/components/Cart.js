@@ -48,7 +48,8 @@ class Cart extends React.Component {
             Total Price: $
             {orderItems
               .map(item => item.toy.price * item.quantity)
-              .reduce((total, subtotal) => total + subtotal)}
+              .reduce((total, subtotal) => total + subtotal)
+              .toFixed(2)}
           </h2>
         </div>
       </div>

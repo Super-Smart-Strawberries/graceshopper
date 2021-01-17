@@ -86,12 +86,6 @@ async function seed() {
   const cartTwo = await cartItemTwo.setToy(toy2)
   await cartTwo.setPurchaseActivity(activity)
 
-  // const toy1 = await Toy.create(toyOne)
-  // const review1 = await Review.create(review)
-  // const review2 = await Review.create(reviewTwo)
-  // await toy1.setReview(reviews[0])
-  // await toy1.setReview(reviews[3])
-
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
