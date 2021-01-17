@@ -4,6 +4,7 @@ import axios from 'axios'
  */
 const GET_ACTIVITY = 'GET_ACTIVITY'
 const GET_SINGLE_ACTIVITY = 'GET_SINGLE_ACTIVITY'
+const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 
 /**
  * INITIAL STATE
@@ -18,6 +19,7 @@ const getSingleActivity = singleActivity => ({
   type: GET_SINGLE_ACTIVITY,
   singleActivity
 })
+const addOrderItem = orderItem => ({type: ADD_ORDER_ITEM, orderItem})
 
 /**
  * THUNK CREATORS
@@ -40,6 +42,15 @@ export const fetchSingleActivity = id => async dispatch => {
   }
 }
 
+export const postOrderItem = orderItem => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/purchase-activity`, orderItem)
+    dispatch(addOrderItem(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -49,6 +60,8 @@ export default function activityReducer(state = initialState, action) {
       return action.activity
     case GET_SINGLE_ACTIVITY:
       return action.singleActivity
+    case ADD_ORDER_ITEM:
+      return action.orderItem
     default:
       return state
   }
