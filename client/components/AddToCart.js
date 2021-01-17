@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {postOrderItem} from '../store/purchase-activity'
 
 class AddToCart extends Component {
   constructor() {
@@ -14,13 +16,21 @@ class AddToCart extends Component {
       [evt.target.name]: evt.target.value
     })
   }
-  handleSubmit(evt) {
-    const {id} = this.props.singleToy
+  async handleSubmit(evt) {
     evt.preventDefault()
-    console.log(`${this.state.toyQty} quantities of ToyId ${id} added to cart`)
-    this.setState({
-      toyQty: 1
-    })
+    try {
+      await this.props.postOrderItem(this.state)
+      this.setState({
+        toyQty: 1
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    // const {id} = this.props.postOrderItem(this.state)
+    // console.log(`${this.state.toyQty} quantities of ToyId ${id} added to cart`)
+    // this.setState({
+    //   toyQty: 1
+    // })
   }
   render() {
     const {singleToy} = this.props
@@ -59,4 +69,12 @@ class AddToCart extends Component {
   }
 }
 
-export default AddToCart
+const mapState = state => ({
+  orderItem: state.orderItem
+})
+
+const mapDispatch = disptach => ({
+  postOrderItem: newOrderItem => disptach(postOrderItem(newOrderItem))
+})
+
+export default connect(mapState, mapDispatch)(AddToCart)

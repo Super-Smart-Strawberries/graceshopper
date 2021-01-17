@@ -31,6 +31,7 @@ class Routes extends Component {
           path="/guests/:guestId/purchase-activity/:id"
           component={Cart}
         />
+        <Route exact path="/purchase-activity" component={Cart} />
         <Route exact path="/toys/:toyId" component={SingleToy} />
         {isLoggedIn && (
           <Switch>
@@ -38,11 +39,7 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
             <Route exact path="/users" component={AllUsers} />
             <Route exact path="/users/:userId" component={SingleUser} />
-            <Route
-              exact
-              path="/users/:userId/purchase-activity/:id"
-              component={Cart}
-            />
+            <Route exact path="/purchase-activity" component={Cart} />
             <Route exact path="/toys/:toyId" component={SingleToy} />
           </Switch>
         )}

@@ -19,9 +19,6 @@ router.get('/:toyId', async (req, res, next) => {
       include: [
         {
           model: Review
-          // where: {
-          //   toyId: req.params.toyId
-          // }
         }
       ]
     })
