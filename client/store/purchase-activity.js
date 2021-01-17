@@ -5,11 +5,12 @@ import axios from 'axios'
 const GET_ACTIVITY = 'GET_ACTIVITY'
 const GET_SINGLE_ACTIVITY = 'GET_SINGLE_ACTIVITY'
 const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM'
+const REMOVE_ORDER_ITEM = 'REMOVE_ORDER_ITEM'
 
 /**
  * INITIAL STATE
  */
-const initialState = {}
+const initialState = {orderItems: []}
 
 /**
  * ACTION CREATORS
@@ -21,9 +22,15 @@ const getSingleActivity = singleActivity => ({
   singleActivity
 })
 
-const updatedOrderItem = update => ({
+const updatedOrderItem = (update, id) => ({
   type: UPDATE_ORDER_ITEM,
-  update
+  update,
+  id
+})
+
+const removedOrderItem = id => ({
+  type: REMOVE_ORDER_ITEM,
+  id
 })
 /**
  * THUNK CREATORS
@@ -52,30 +59,41 @@ export const updateOrderItem = (orderItemId, update) => async dispatch => {
       `/api/order-item/update/${orderItemId}`,
       update
     )
-    dispatch(updatedOrderItem(data))
+    dispatch(updatedOrderItem(data, orderItemId))
   } catch (err) {
     console.log(err)
+  }
+}
+
+export const removeOrderItem = id => async dispatch => {
+  try {
+    await axios.delete(`/api/order-item/delete/${id}`)
+    dispatch(removedOrderItem(id))
+  } catch (error) {
+    console.log(error)
   }
 }
 /**
  * REDUCER
  */
 export default function activityReducer(state = initialState, action) {
-  let updatedOrders
   switch (action.type) {
     case GET_ACTIVITY:
       return action.activity
     case GET_SINGLE_ACTIVITY:
       return action.singleActivity
     case UPDATE_ORDER_ITEM:
-      updatedOrders = state.orderItems.map(item => {
-        if (item.id === action.id) {
-          return action.update
-        } else {
-          return item
-        }
-      })
-      return {...state, orderItems: updatedOrders}
+      return {
+        ...state,
+        orderItems: state.orderItems.map(
+          item => (item.id === action.id ? action.update : item)
+        )
+      }
+    case REMOVE_ORDER_ITEM:
+      return {
+        ...state,
+        orderItems: state.orderItems.filter(item => item.id !== action.id)
+      }
     default:
       return state
   }

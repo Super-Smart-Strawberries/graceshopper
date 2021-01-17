@@ -21,22 +21,6 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.delete(
-  '/delete-purchase/:purchaseActivityId/:toyId',
-  async (req, res, next) => {
-    try {
-      const {purchaseActivityId, toyId} = req.params
-      const activity = await PurchaseActivity.findOne({
-        where: {id: purchaseActivityId}
-      })
-      await activity.removeToy([toyId])
-      res.sendStatus(204).end()
-    } catch (err) {
-      next(err)
-    }
-  }
-)
-
 router.post('/', async (req, res, next) => {
   try {
     const addToy = await PurchaseActivity.create(req.body)

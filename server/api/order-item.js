@@ -12,3 +12,14 @@ router.put('/update/:orderItemId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/delete/:orderItemId', async (req, res, next) => {
+  try {
+    const {orderItemId} = req.params
+    const removeOrderItem = await OrderItem.findByPk(orderItemId)
+    await removeOrderItem.destroy()
+    res.sendStatus(204).end()
+  } catch (err) {
+    next(err)
+  }
+})

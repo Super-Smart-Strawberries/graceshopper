@@ -32,19 +32,19 @@ const reviewTwo = {
   description: 'this is a waste of money.'
 }
 
-// const toyTwo = {
-//   name: 'Lovely Duckly',
-//   description: 'Rubber Ducky',
-//   price: 150.98,
-//   inventory: 15
-// }
+const toyTwo = {
+  name: 'Lovely Duckly',
+  description: 'Rubber Ducky',
+  price: 150.98,
+  inventory: 15
+}
 
-// const toyThree = {
-//   name: 'angry ducky',
-//   description: 'heated',
-//   price: 1000.99,
-//   inventory: 30
-// }
+const toyThree = {
+  name: 'angry ducky',
+  description: 'heated',
+  price: 1000.99,
+  inventory: 30
+}
 
 const activityOne = {
   isOrdered: false
@@ -74,17 +74,17 @@ async function seed() {
   const createdToys = await Toy.bulkCreate(toys)
   const createdReviews = await Review.bulkCreate(reviews)
   const createdUserInfo = await UserInfo.bulkCreate(userInfo)
-  // const lovelyDuckly = await Toy.create(toyTwo)
-  // const cartItemOne = await OrderItem.create(orderItemOne)
-  // const activity = await PurchaseActivity.create(activityOne)
-  // const cartOne = await cartItemOne.setToy(lovelyDuckly)
-  // await cartOne.setPurchaseActivity(activity)
-  // // console.log(Object.keys(OrderItem.prototype)) // to be deleted
-  //bulk associations
-  // const toy2 = await Toy.create(toyThree)
-  // const cartItemTwo = await OrderItem.create(orderItemTwo)
-  // const cartTwo = await cartItemTwo.setToy(toy2)
-  // await cartTwo.setPurchaseActivity(activity)
+  const lovelyDuckly = await Toy.create(toyTwo)
+  const cartItemOne = await OrderItem.create(orderItemOne)
+  const activity = await PurchaseActivity.create(activityOne)
+  const cartOne = await cartItemOne.setToy(lovelyDuckly)
+  await cartOne.setPurchaseActivity(activity)
+  // console.log(Object.keys(OrderItem.prototype)) // to be deleted
+  // bulk associations
+  const toy2 = await Toy.create(toyThree)
+  const cartItemTwo = await OrderItem.create(orderItemTwo)
+  const cartTwo = await cartItemTwo.setToy(toy2)
+  await cartTwo.setPurchaseActivity(activity)
 
   // const toy1 = await Toy.create(toyOne)
   // const review1 = await Review.create(review)

@@ -22,10 +22,15 @@ const UpdateOrderItem = props => {
   }
 
   return (
-    <div key={orderItem.id}>
-      <select onChange={handleSubmit}>{qtyNum}</select>
+    <div>
       <p>
-        Subtotal Price: <b>${toy.price * orderItem.quantity}</b>
+        Quantity:
+        <select defaultValue={orderItem.quantity} onChange={handleSubmit}>
+          {qtyNum}
+        </select>
+      </p>
+      <p>
+        Subtotal Price: <b>${(toy.price * orderItem.quantity).toFixed(2)}</b>
       </p>
     </div>
   )

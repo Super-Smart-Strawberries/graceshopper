@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleActivity, updateOrderItem} from '../store/purchase-activity'
+import {fetchSingleActivity, removeOrderItem} from '../store/purchase-activity'
 import UpdateOrderItem from './UpdateOrderItem'
 
 //cart items will be held in state
@@ -10,7 +10,7 @@ class Cart extends React.Component {
     this.props.getActivity(this.props.match.params.id)
   }
   render() {
-    const {items} = this.props
+    const {items, remove} = this.props
     const {orderItems} = items
     console.log('this.props from Cart: ', this.props)
 
@@ -33,9 +33,12 @@ class Cart extends React.Component {
                 </span>
                 <p>Description: {toy.description}</p>
                 <p>Unit Price: ${toy.price}</p>
-                <p>Quantity: {orderItem.quantity}</p>
-                <h4>Update Quantity?</h4>
                 <UpdateOrderItem orderItem={orderItem} />
+              </div>
+              <div>
+                <button type="button" onClick={() => remove(orderItem.id)}>
+                  Remove Order Item
+                </button>
               </div>
             </li>
           )
@@ -88,11 +91,11 @@ const mapStateToProps = state => {
     items: state.activity
   }
 }
+
 const mapDispatch = dispatch => {
   return {
-    getActivity: id => dispatch(fetchSingleActivity(id))
-    // update: (orderItemId, update) =>
-    //   dispatch(updateOrderItem(orderItemId, update)),
+    getActivity: id => dispatch(fetchSingleActivity(id)),
+    remove: id => dispatch(removeOrderItem(id))
   }
 }
 
