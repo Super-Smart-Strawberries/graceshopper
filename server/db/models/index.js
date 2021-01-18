@@ -5,6 +5,7 @@ const UserInfo = require('./user-info')
 const Toy = require('./toys')
 const Review = require('./reviews')
 const OrderItem = require('./order-item')
+const {Session} = require('express-session')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
