@@ -68,6 +68,9 @@ async function seed() {
   const cartOne = await cartItemOne.setToy(lovelyDuckly)
   await cartOne.setPurchaseActivity(activity)
 
+  // console.log(Object.keys(PurchaseActivity.prototype)) // to be deleted
+  // console.log(Object.keys(UserLogin.prototype)) // to be deleted
+
   const toy2 = await Toy.create(toyThree)
   const cartItemTwo = await OrderItem.create(orderItemTwo)
   const cartTwo = await cartItemTwo.setToy(toy2)

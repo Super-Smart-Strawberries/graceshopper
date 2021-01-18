@@ -14,7 +14,7 @@ const UpdateOrderItem = props => {
   for (let i = 1; i <= 50; i++) {
     qtyNum.push(
       <option key={i} value={i}>
-        Qty: {i}
+        {i}
       </option>
     )
   }
