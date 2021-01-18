@@ -20,6 +20,55 @@ const {
 } = require('../server/db/models')
 const {act} = require('react-test-renderer')
 
+const toyOne = {
+  name: 'rubber ducky',
+  description: 'the one friend on your desk',
+  price: 15.5,
+  image:
+    'https://cdn.shopify.com/s/files/1/0012/4482/3632/products/duck_1200x.jpg?v=1583533109',
+  inventory: 20
+}
+
+const review = {
+  ratings: 5,
+  description: 'this ducky is an amazing companion for your coding.'
+}
+
+const reviewTwo = {
+  ratings: 1,
+  description: 'this is a waste of money.'
+}
+
+const toyTwo = {
+  name: 'Lovely Duckly',
+  description: 'Rubber Ducky',
+  price: 150.98,
+  inventory: 15
+}
+
+const toyThree = {
+  name: 'angry ducky',
+  description: 'heated',
+  price: 1000.99,
+  inventory: 30
+}
+
+const activityOne = {
+  isOrdered: false
+}
+
+const activityTwo = {
+  isOrdered: false
+}
+
+const orderItemOne = {
+  quantity: 2
+}
+
+const orderItemTwo = {
+  quantity: 4
+}
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
