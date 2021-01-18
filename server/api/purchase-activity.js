@@ -79,7 +79,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const singleCartInfo = await PurchaseActivity.findAll({
+    const singleCartInfo = await PurchaseActivity.findOne({
       where: {
         isOrdered: false,
         userLoginId: req.user.id

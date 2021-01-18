@@ -19,8 +19,8 @@ class AddToCart extends Component {
   async handleSubmit(evt) {
     evt.preventDefault()
     try {
-      // await this.props.addToCart(this.state)
-      await this.props.addToOrderItem(this.state)
+      await this.props.addToCart(this.state)
+      // await this.props.addToOrderItem(this.state)
       this.setState({
         quantity: 1
       })
@@ -74,8 +74,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = disptach => ({
-  addToCart: newOrderItem => disptach(postOrderItem(newOrderItem)),
-  addToOrderItem: newOrder => disptach(postOrder(newOrder))
+  addToCart: newOrderItem => disptach(postOrderItem(newOrderItem))
+  // addToOrderItem: (newOrder) => disptach(postOrder(newOrder)),
 })
 
 export default connect(mapState, mapDispatch)(AddToCart)

@@ -12,6 +12,7 @@ class Cart extends React.Component {
   render() {
     const {items, remove} = this.props
     const {orderItems} = items
+    console.log(this.props)
 
     let cartItems =
       items.id && orderItems.length ? (
@@ -96,7 +97,7 @@ const mapStateToProps = state => {
 const mapDispatch = dispatch => {
   return {
     getActivity: () => dispatch(fetchActivity()),
-    // getSingleActivity: (id) => dispatch(fetchSingleActivity(id)),
+    getSingleActivity: id => dispatch(fetchSingleActivity(id)),
     remove: id => dispatch(removeOrderItem(id))
   }
 }
