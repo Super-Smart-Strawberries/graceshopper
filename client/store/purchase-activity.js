@@ -77,6 +77,16 @@ export const removeOrderItem = id => async dispatch => {
 }
 export const postOrderItem = orderItem => async dispatch => {
   try {
+    const {data} = await axios.post(`/api/purchase-activity`, orderItem)
+    console.log(data)
+    dispatch(addOrderItem(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const postOrder = orderItem => async dispatch => {
+  try {
     const {data} = await axios.post(`/api/order-item`, orderItem)
     console.log(data)
     dispatch(addOrderItem(data))

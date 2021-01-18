@@ -25,18 +25,11 @@ const orderItemOne = {
   toyId: 3,
   purchaseActivityId: 1
 }
-const toyTwo = {
-  name: 'Lovely Duckly',
-  description: 'Rubber Ducky',
-  price: 150.98,
-  inventory: 15
-}
 
-const toyThree = {
-  name: 'angry ducky',
-  description: 'heated',
-  price: 1000.99,
-  inventory: 30
+const orderItemTwo = {
+  quantity: 4,
+  toyId: 1,
+  purchaseActivityId: 2
 }
 
 const activityOne = {
@@ -46,10 +39,6 @@ const activityOne = {
 const activityTwo = {
   isOrdered: false,
   userLoginId: 2
-}
-
-const orderItemTwo = {
-  quantity: 4
 }
 
 async function seed() {
@@ -68,24 +57,18 @@ async function seed() {
   const activity1 = await PurchaseActivity.create(activityOne)
   const activity2 = await PurchaseActivity.create(activityTwo)
   const item1 = await OrderItem.create(orderItemOne)
-  // await activity1.addOrderItem
-  await Toy.bulkCreate(toys)
-  await Review.bulkCreate(reviews)
-  await UserInfo.bulkCreate(userInfo)
   // await OrderItem.bulkCreate(orderItems)
   // await UserLogin.bulkCreate(userLogin)
   // await PurchaseActivity.bulkCreate(purchaseActivities)
 
-  const lovelyDuckly = await Toy.create(toyTwo)
+  // const lovelyDuckly = await Toy.create(toyTwo)
   const cartItemOne = await OrderItem.create(orderItemOne)
   const activity = await PurchaseActivity.create(activityOne)
-  const cartOne = await cartItemOne.setToy(lovelyDuckly)
-  await cartOne.setPurchaseActivity(activity)
-
-  const toy2 = await Toy.create(toyThree)
+  // const cartOne = await cartItemOne.setToy(lovelyDuckly)
+  // await cartOne.setPurchaseActivity(activity)
   const cartItemTwo = await OrderItem.create(orderItemTwo)
-  const cartTwo = await cartItemTwo.setToy(toy2)
-  await cartTwo.setPurchaseActivity(activity)
+  // const cartTwo = await cartItemTwo.setToy(toy2)
+  // await cartTwo.setPurchaseActivity(activity)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
