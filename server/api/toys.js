@@ -53,7 +53,7 @@ router.put('/:toyId', isAdmin, async (req, res, next) => {
   }
 })
 
-router.delete('/:toyId', async (req, res, next) => {
+router.delete('/:toyId', isAdmin, async (req, res, next) => {
   try {
     await Toy.destroy({
       where: {

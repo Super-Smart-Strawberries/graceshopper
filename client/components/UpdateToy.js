@@ -1,9 +1,13 @@
 import React from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import deleteToy from '../store/singleToy'
 
-export default class UpdateToy extends React.Component {
-  constructor() {
-    super()
+class UpdateToy extends React.Component {
+  constructor(props) {
+    super(props)
+    //let toy = this.props.singleToy
+    //console.log('state in UpdateToy: ', this.state)
     this.state = {
       name: this.props.toy.name,
       description: this.props.toy.description,
@@ -42,6 +46,15 @@ export default class UpdateToy extends React.Component {
     }
   }
 
+  async handleDelete(toyId) {
+    try {
+      await axios.delete(`/api/toys/${toyId}`)
+      this.props.deleteToy(toyId)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   render() {
     return (
       <div id="update-toy">
@@ -51,40 +64,61 @@ export default class UpdateToy extends React.Component {
             name="name"
             type="text"
             onChange={this.handleChange}
-            value={this.props.toy.name}
+            defaultValue={this.props.toy.name}
           />
           <br />
           <input
             name="description"
             type="text"
             onChange={this.handleChange}
-            value={this.props.toy.description}
+            defaultValue={this.props.toy.description}
           />
           <br />
           <input
             name="price"
             type="number"
             onChange={this.handleChange}
-            value={this.props.toy.price}
+            defaultValue={this.props.toy.price}
           />
           <br />
           <input
             name="image"
             type="text"
             onChange={this.handleChange}
-            value={this.props.toy.image}
+            defaultValue={this.props.toy.image}
           />
           <br />
           <input
             name="inventory"
             type="number"
             onChange={this.handleChange}
-            value={this.props.toy.inventory}
+            defaultValue={this.props.toy.inventory}
           />
           <br />
-          <button type="submit">Submit</button>
+          <button type="submit" id="update-btn">
+            Submit
+          </button>
+          <button
+            type="submit"
+            id="delete-btn"
+            onClick={() => this.handleDelete(this.props.toy.id)}
+          >
+            Delete
+          </button>
         </form>
       </div>
     )
   }
 }
+
+// const mapState = (state) => {
+//   return {
+//     toy: state.toy,
+//   }
+// }
+
+const mapDispatch = dispatch => ({
+  removeToy: toyId => dispatch(deleteToy(toyId))
+})
+
+export default connect(null, mapDispatch)(UpdateToy)

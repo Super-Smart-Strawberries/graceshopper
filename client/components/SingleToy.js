@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleToy} from '../store/singleToy'
 import AddToCart from './AddToCart'
+import UpdateToy from './UpdateToy'
 
 class SingleToy extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ class SingleToy extends Component {
         ) : (
           <AddToCart singleToy={singleToy} />
         )}
+        {<UpdateToy toy={singleToy} />}
       </div>
     )
   }
