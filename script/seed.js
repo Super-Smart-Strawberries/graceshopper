@@ -18,32 +18,7 @@ const {
   OrderItem,
   UserInfo
 } = require('../server/db/models')
-
-const toyTwo = {
-  name: 'Lovely Duckly',
-  description: 'Rubber Ducky',
-  price: 150.98,
-  inventory: 15
-}
-
-const toyThree = {
-  name: 'angry ducky',
-  description: 'heated',
-  price: 1000.99,
-  inventory: 30
-}
-
-const activityOne = {
-  isOrdered: false
-}
-
-const orderItemOne = {
-  quantity: 2
-}
-
-const orderItemTwo = {
-  quantity: 4
-}
+const {act} = require('react-test-renderer')
 
 async function seed() {
   await db.sync({force: true})
@@ -75,6 +50,11 @@ async function seed() {
   const cartItemTwo = await OrderItem.create(orderItemTwo)
   const cartTwo = await cartItemTwo.setToy(toy2)
   await cartTwo.setPurchaseActivity(activity)
+  const createdToys = await Toy.bulkCreate(toys)
+  const createdReviews = await Review.bulkCreate(reviews)
+  const createdUserInfo = await UserInfo.bulkCreate(userInfo)
+  const activities = await PurchaseActivity.bulkCreate(purchaseActivities)
+  const orderItem = await OrderItem.bulkCreate(orderItems)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

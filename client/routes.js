@@ -26,6 +26,12 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/toys" component={ToyList} />
         {/* <Route exact path="/purchase-activity" component={Cart} /> */}
+        <Route
+          exact
+          path="/guests/:guestId/purchase-activity/:id"
+          component={Cart}
+        />
+        <Route exact path="/purchase-activity" component={Cart} />
         <Route exact path="/purchase-activity/:id" component={Cart} />
         <Route exact path="/toys/:toyId" component={SingleToy} />
         {isLoggedIn && (
@@ -34,7 +40,8 @@ class Routes extends Component {
             <Route path="/home" component={UserHome} />
             <Route exact path="/users" component={AllUsers} />
             <Route exact path="/users/:userId" component={SingleUser} />
-            <Route exact path="purchase-activity/:id" component={Cart} />
+            <Route exact path="/purchase-activity" component={Cart} />
+            <Route exact path="/toys/:toyId" component={SingleToy} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
