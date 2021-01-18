@@ -2,11 +2,13 @@ const router = require('express').Router()
 const {PurchaseActivity, Toy, OrderItem} = require('../db/models')
 module.exports = router
 
-router.get('/:id', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const singleCartInfo = await PurchaseActivity.findByPk(req.params.id, {
+    console.log(req)
+    const singleCartInfo = await PurchaseActivity.findOne({
       where: {
-        isOrdered: false
+        isOrdered: false,
+        userLoginId: req.user.id
       },
       include: [
         {
@@ -76,26 +78,6 @@ router.get('/:id', async (req, res, next) => {
 //     console.log(error)
 //   }
 // })
-
-router.get('/', async (req, res, next) => {
-  try {
-    const singleCartInfo = await PurchaseActivity.findOne({
-      where: {
-        isOrdered: false,
-        userLoginId: req.user.id
-      },
-      include: [
-        {
-          model: OrderItem,
-          include: [Toy]
-        }
-      ]
-    })
-    res.send(singleCartInfo)
-  } catch (err) {
-    next(err)
-  }
-})
 
 router.post('/', async (req, res, next) => {
   try {
