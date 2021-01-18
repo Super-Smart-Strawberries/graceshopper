@@ -28,11 +28,6 @@ class AddToCart extends Component {
     } catch (error) {
       console.log(error)
     }
-    // const {id} = this.props.postOrderItem(this.state)
-    // console.log(`${this.state.toyQty} quantities of ToyId ${id} added to cart`)
-    // this.setState({
-    //   toyQty: 1
-    // })
   }
   render() {
     const {singleToy} = this.props

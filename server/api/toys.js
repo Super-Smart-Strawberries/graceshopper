@@ -45,7 +45,6 @@ router.post('/:toyId', async (req, res, next) => {
         await newOrderItem.setToy(toy)
         res.send(newOrderItem)
       } else {
-        console.log(req)
         const newPurchaseActivity = await PurchaseActivity.create({
           userLoginId: req.user.id
         })
@@ -55,7 +54,28 @@ router.post('/:toyId', async (req, res, next) => {
         res.send(newOrderItem)
       }
     } else {
-      console.log('this is for the guest route')
+      const previousActivity = await PurchaseActivity.findOne({
+        where: {
+          isOrdered: false,
+          guestId: req.sessionID
+        }
+      })
+      const toy = await Toy.findByPk(req.params.toyId)
+      //loggedinUser
+      if (previousActivity) {
+        const newOrderItem = await OrderItem.create(req.body)
+        await newOrderItem.setPurchaseActivity(previousActivity)
+        await newOrderItem.setToy(toy)
+        res.send(newOrderItem)
+      } else {
+        const newPurchaseActivity = await PurchaseActivity.create({
+          guestId: req.sessionID
+        })
+        const newOrderItem = await OrderItem.create(req.body)
+        await newOrderItem.setPurchaseActivity(newPurchaseActivity)
+        await newOrderItem.setToy(toy)
+        res.send(newOrderItem)
+      }
     }
   } catch (error) {
     console.log(error)

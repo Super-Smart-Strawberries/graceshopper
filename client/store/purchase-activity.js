@@ -75,35 +75,15 @@ export const removeOrderItem = id => async dispatch => {
     console.log(error)
   }
 }
-// export const postOrderItem = orderItem => async dispatch => {
-//   try {
-//     const {data} = await axios.post(`/api/purchase-activity`, orderItem)
-//     console.log(data)
-//     dispatch(addOrderItem(data))
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 export const postOrderItem = (id, orderItem) => async dispatch => {
   try {
     const {data} = await axios.post(`/api/toys/${id}`, orderItem)
-    console.log(data)
     dispatch(addOrderItem(data))
   } catch (error) {
     console.log(error)
   }
 }
-
-// export const postOrderItem = (orderItem) => async (dispatch) => {
-//   try {
-//     const {data} = await axios.post(`/api/order-item`, orderItem)
-//     console.log(data)
-//     dispatch(addOrderItem(data))
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 /**
  * REDUCER

@@ -12,10 +12,9 @@ class Cart extends React.Component {
   render() {
     const {items, remove} = this.props
     const {orderItems} = items
-    console.log(this.props)
 
     let cartItems =
-      items.id && orderItems.length ? (
+      items.id && orderItems ? (
         <div>
           {orderItems.map(orderItem => {
             const {toy} = orderItem
