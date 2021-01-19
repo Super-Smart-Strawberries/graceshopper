@@ -29,7 +29,6 @@ router.get('/:toyId', async (req, res, next) => {
   }
 })
 
-
 router.post('/', isAdmin, async (req, res, next) => {
   try {
     const newToy = await Toy.create(req.body)
@@ -61,6 +60,8 @@ router.delete('/:toyId', isAdmin, async (req, res, next) => {
   } catch (err) {
     console.log('problem deleting toy! ', err)
     next(err)
+  }
+})
 
 router.post('/:toyId', async (req, res, next) => {
   try {

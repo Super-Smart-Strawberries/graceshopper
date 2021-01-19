@@ -11,7 +11,10 @@ import {
   Cart,
   ToyList,
   SingleToy,
-  UpdateToy
+  UpdateToy,
+  AddToCart,
+  authForm,
+  UpdateOrderItem
 } from './components'
 import {me} from './store'
 
