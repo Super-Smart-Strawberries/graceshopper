@@ -2,20 +2,37 @@ const router = require('express').Router()
 const {PurchaseActivity, Toy, OrderItem} = require('../db/models')
 module.exports = router
 
-router.get('/:id', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const singleCartInfo = await PurchaseActivity.findByPk(req.params.id, {
-      where: {
-        isOrdered: false
-      },
-      include: [
-        {
-          model: OrderItem,
-          include: [Toy]
-        }
-      ]
-    })
-    res.send(singleCartInfo)
+    if (req.user) {
+      const singleCartInfo = await PurchaseActivity.findOne({
+        where: {
+          isOrdered: false,
+          userLoginId: req.user.id
+        },
+        include: [
+          {
+            model: OrderItem,
+            include: [Toy]
+          }
+        ]
+      })
+      res.send(singleCartInfo)
+    } else {
+      const singleCartInfo = await PurchaseActivity.findOne({
+        where: {
+          isOrdered: false,
+          guestId: req.sessionID
+        },
+        include: [
+          {
+            model: OrderItem,
+            include: [Toy]
+          }
+        ]
+      })
+      res.send(singleCartInfo)
+    }
   } catch (err) {
     next(err)
   }
@@ -23,9 +40,11 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const addToy = await PurchaseActivity.create(req.body)
-    res.send(addToy)
-  } catch (err) {
-    next(err)
+    const newCartItem = await PurchaseActivity.create({
+      userLoginId: req.user.id
+    })
+    res.send(newCartItem)
+  } catch (error) {
+    console.log(error)
   }
 })

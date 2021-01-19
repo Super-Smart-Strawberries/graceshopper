@@ -18,32 +18,7 @@ const {
   OrderItem,
   UserInfo
 } = require('../server/db/models')
-
-const toyTwo = {
-  name: 'Lovely Duckly',
-  description: 'Rubber Ducky',
-  price: 150.98,
-  inventory: 15
-}
-
-const toyThree = {
-  name: 'angry ducky',
-  description: 'heated',
-  price: 1000.99,
-  inventory: 30
-}
-
-const activityOne = {
-  isOrdered: false
-}
-
-const orderItemOne = {
-  quantity: 2
-}
-
-const orderItemTwo = {
-  quantity: 4
-}
+const {act} = require('react-test-renderer')
 
 async function seed() {
   await db.sync({force: true})
@@ -55,23 +30,11 @@ async function seed() {
   ])
 
   //bulk create data
-  await Toy.bulkCreate(toys)
-  await Review.bulkCreate(reviews)
-  await UserInfo.bulkCreate(userInfo)
-  // await OrderItem.bulkCreate(orderItems)
-  // await UserLogin.bulkCreate(userLogin)
-  // await PurchaseActivity.bulkCreate(purchaseActivities)
-
-  const lovelyDuckly = await Toy.create(toyTwo)
-  const cartItemOne = await OrderItem.create(orderItemOne)
-  const activity = await PurchaseActivity.create(activityOne)
-  const cartOne = await cartItemOne.setToy(lovelyDuckly)
-  await cartOne.setPurchaseActivity(activity)
-
-  const toy2 = await Toy.create(toyThree)
-  const cartItemTwo = await OrderItem.create(orderItemTwo)
-  const cartTwo = await cartItemTwo.setToy(toy2)
-  await cartTwo.setPurchaseActivity(activity)
+  const createdToys = await Toy.bulkCreate(toys)
+  const createdReviews = await Review.bulkCreate(reviews)
+  const createdUserInfo = await UserInfo.bulkCreate(userInfo)
+  const activity = await PurchaseActivity.bulkCreate(purchaseActivities)
+  const orderItem = await OrderItem.bulkCreate(orderItems)
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)

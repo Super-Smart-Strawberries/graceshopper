@@ -6,6 +6,7 @@ const GET_ACTIVITY = 'GET_ACTIVITY'
 const GET_SINGLE_ACTIVITY = 'GET_SINGLE_ACTIVITY'
 const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM'
 const REMOVE_ORDER_ITEM = 'REMOVE_ORDER_ITEM'
+const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
 
 /**
  * INITIAL STATE
@@ -21,6 +22,7 @@ const getSingleActivity = singleActivity => ({
   type: GET_SINGLE_ACTIVITY,
   singleActivity
 })
+const addOrderItem = orderItem => ({type: ADD_ORDER_ITEM, orderItem})
 
 const updatedOrderItem = (qty, id) => ({
   type: UPDATE_ORDER_ITEM,
@@ -73,6 +75,16 @@ export const removeOrderItem = id => async dispatch => {
     console.log(error)
   }
 }
+
+export const postOrderItem = (id, orderItem) => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/toys/${id}`, orderItem)
+    dispatch(addOrderItem(data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -95,6 +107,8 @@ export default function activityReducer(state = initialState, action) {
         ...state,
         orderItems: state.orderItems.filter(item => item.id !== action.id)
       }
+    case ADD_ORDER_ITEM:
+      return action.orderItem
     default:
       return state
   }

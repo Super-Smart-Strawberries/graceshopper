@@ -18,7 +18,6 @@ class SingleUser extends React.Component {
   }
 
   render() {
-    console.log('this.props: ', this.props)
     return <h1>User Information:</h1>
   }
 }
