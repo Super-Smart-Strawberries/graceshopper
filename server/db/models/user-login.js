@@ -6,13 +6,24 @@ const UserLogin = db.define('userLogin', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true,
+      notEmpty: true
+    }
   },
   password: {
     type: Sequelize.STRING,
     // Making `.password` act like a func hides it when serializing to JSON.
     // This is a hack to get around Sequelize's lack of a "private" option.
-    allowNull: false,
+    validate: {
+      // notNull: {
+      //   msg: 'Please enter a valid password',
+      // },
+      len: [8, 20],
+      notEmpty: true,
+      notContains: ['password', 'abc']
+    },
     get() {
       return () => this.getDataValue('password')
     }
