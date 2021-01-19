@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const isAdmin = require('../auth/isAdmin')
 const {Toy, Review, OrderItem, PurchaseActivity} = require('../db/models')
 module.exports = router
 
@@ -24,6 +25,40 @@ router.get('/:toyId', async (req, res, next) => {
     })
     res.send(toy)
   } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/', isAdmin, async (req, res, next) => {
+  try {
+    const newToy = await Toy.create(req.body)
+    res.send(newToy)
+  } catch (err) {
+    console.log('Unauthorized!!! ', err)
+    next(err)
+  }
+})
+
+router.put('/:toyId', isAdmin, async (req, res, next) => {
+  try {
+    const toy = await Toy.findByPk(req.params.toyId)
+    await toy.update(req.body)
+    res.send(toy)
+  } catch (err) {
+    console.log('error updating toy! ', err)
+    next(err)
+  }
+})
+
+router.delete('/:toyId', isAdmin, async (req, res, next) => {
+  console.log(req.params)
+  try {
+    const {toyId} = req.params
+    const toyToDelete = await Toy.findByPk(toyId)
+    await toyToDelete.destroy()
+    res.status(204).end()
+  } catch (err) {
+    console.log('problem deleting toy! ', err)
     next(err)
   }
 })
