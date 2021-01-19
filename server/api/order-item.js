@@ -13,9 +13,47 @@ router.post('/', async (req, res, next) => {
 
 router.put('/update/:orderItemId', async (req, res, next) => {
   try {
-    const orderById = await OrderItem.findByPk(req.params.orderItemId)
-    const updated = await orderById.update(req.body)
-    res.send(updated)
+    if (req.user) {
+      // Existing user
+      const {dataValues} = await PurchaseActivity.findOne({
+        where: {
+          userLoginId: req.user.id
+        }
+      })
+      const updated = await OrderItem.update(req.body, {
+        returning: true,
+        where: {
+          id: req.params.orderItemId,
+          purchaseActivityId: dataValues.id
+        }
+      })
+      if (updated.length !== 2) {
+        // orderItem was not found
+        return res.sendStatus(404)
+      }
+      const [numUpdated, [updatedOrder]] = updated
+      res.send(updatedOrder)
+    } else {
+      // Guest user
+      const {dataValues} = await PurchaseActivity.findOne({
+        where: {
+          userLoginId: req.sessionID
+        }
+      })
+      const updated = await OrderItem.update(req.body, {
+        returning: true,
+        where: {
+          id: req.params.orderItemId,
+          purchaseActivityId: dataValues.id
+        }
+      })
+      if (updated.length !== 2) {
+        // orderItem was not found
+        return res.sendStatus(404)
+      }
+      const [numUpdated, [updatedOrder]] = updated
+      res.send(updatedOrder)
+    }
   } catch (err) {
     next(err)
   }
@@ -23,10 +61,35 @@ router.put('/update/:orderItemId', async (req, res, next) => {
 
 router.delete('/delete/:orderItemId', async (req, res, next) => {
   try {
-    const {orderItemId} = req.params
-    const removeOrderItem = await OrderItem.findByPk(orderItemId)
-    await removeOrderItem.destroy()
-    res.sendStatus(204).end()
+    if (req.user) {
+      // Existing user
+      const {dataValues} = await PurchaseActivity.findOne({
+        where: {
+          userLoginId: req.user.id
+        }
+      })
+      await OrderItem.destroy({
+        where: {
+          id: req.params.orderItemId,
+          purchaseActivityId: dataValues.id
+        }
+      })
+      res.sendStatus(204).end()
+    } else {
+      // Guest user
+      const {dataValues} = await PurchaseActivity.findOne({
+        where: {
+          userLoginId: req.sesisonID
+        }
+      })
+      await OrderItem.destroy({
+        where: {
+          id: req.params.orderItemId,
+          purchaseActivityId: dataValues.id
+        }
+      })
+      res.sendStatus(204).end()
+    }
   } catch (err) {
     next(err)
   }

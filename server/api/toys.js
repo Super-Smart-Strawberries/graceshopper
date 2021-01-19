@@ -31,6 +31,7 @@ router.get('/:toyId', async (req, res, next) => {
 router.post('/:toyId', async (req, res, next) => {
   try {
     if (req.user) {
+      // Logged-in user
       const previousActivity = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
@@ -38,13 +39,14 @@ router.post('/:toyId', async (req, res, next) => {
         }
       })
       const toy = await Toy.findByPk(req.params.toyId)
-      //loggedinUser
       if (previousActivity) {
+        // Existing activity
         const newOrderItem = await OrderItem.create(req.body)
         await newOrderItem.setPurchaseActivity(previousActivity)
         await newOrderItem.setToy(toy)
         res.send(newOrderItem)
       } else {
+        // New activity to be generated
         const newPurchaseActivity = await PurchaseActivity.create({
           userLoginId: req.user.id
         })
@@ -54,6 +56,7 @@ router.post('/:toyId', async (req, res, next) => {
         res.send(newOrderItem)
       }
     } else {
+      // Guest user
       const previousActivity = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
@@ -61,13 +64,14 @@ router.post('/:toyId', async (req, res, next) => {
         }
       })
       const toy = await Toy.findByPk(req.params.toyId)
-      //loggedinUser
       if (previousActivity) {
+        // Existing activity
         const newOrderItem = await OrderItem.create(req.body)
         await newOrderItem.setPurchaseActivity(previousActivity)
         await newOrderItem.setToy(toy)
         res.send(newOrderItem)
       } else {
+        // New activity to be generated
         const newPurchaseActivity = await PurchaseActivity.create({
           guestId: req.sessionID
         })

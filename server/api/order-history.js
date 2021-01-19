@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
       // Existing user
       const usersCartInfo = await PurchaseActivity.findOne({
         where: {
-          isOrdered: false,
+          isOrdered: true,
           userLoginId: req.user.id
         },
         include: [
@@ -24,7 +24,7 @@ router.get('/', async (req, res, next) => {
       console.log(req.sessionID)
       const guestCartInfo = await PurchaseActivity.findOne({
         where: {
-          isOrdered: false,
+          isOrdered: true,
           guestId: req.sessionID
         },
         include: [
@@ -38,42 +38,5 @@ router.get('/', async (req, res, next) => {
     }
   } catch (err) {
     next(err)
-  }
-})
-
-router.post('/', async (req, res, next) => {
-  try {
-    const newCartItem = await PurchaseActivity.create({
-      userLoginId: req.user.id
-    })
-    res.send(newCartItem)
-  } catch (error) {
-    console.log(error)
-  }
-})
-
-router.put('/:activityId', async (req, res, next) => {
-  try {
-    if (req.user) {
-      const ordered = await PurchaseActivity.update(
-        {isOrdered: true},
-        {
-          returning: true,
-          where: {
-            id: req.params.activityId,
-            userLoginId: req.user.id
-          }
-        }
-      )
-      if (ordered.length !== 2) {
-        return res.sendStatus(404)
-      }
-      const [numUpdated, [orderedActivity]] = ordered
-      res.send(orderedActivity)
-    } else {
-      res.send('Cannot be ordered!')
-    }
-  } catch (err) {
-    console.log(err)
   }
 })

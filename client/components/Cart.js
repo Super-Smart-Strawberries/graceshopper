@@ -1,20 +1,47 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {removeOrderItem, fetchActivity} from '../store/purchase-activity'
+import {
+  removeOrderItem,
+  fetchActivity,
+  orderActivity
+} from '../store/purchase-activity'
 import UpdateOrderItem from './UpdateOrderItem'
 
 //cart items will be held in state
 
 class Cart extends React.Component {
+  constructor() {
+    super()
+    this.handleCheckout = this.handleCheckout.bind(this)
+  }
   componentDidMount() {
     this.props.getActivity()
   }
+  async handleCheckout() {
+    const {orderItems} = this.props.items
+
+    if (!orderItems || !orderItems.length) {
+      window.alert('Your Cart is Empty :C')
+    }
+    try {
+      console.log('this.props.items.id from Cart', this.props.items.id)
+      await this.props.order(this.props.items.id)
+      window.location.pathname = '/confirmation'
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   render() {
     const {items, remove} = this.props
     const {orderItems} = items
 
     let cartItems =
-      items.id && orderItems ? (
+      !items.id || !orderItems || !orderItems.length ? (
+        <div>
+          <p>Your Cart is Empty :C</p>
+        </div>
+      ) : (
         <div>
           {orderItems.map(orderItem => {
             const {toy} = orderItem
@@ -49,10 +76,6 @@ class Cart extends React.Component {
             </h2>
           </div>
         </div>
-      ) : (
-        <div>
-          <p>Your Cart is Empty :C</p>
-        </div>
       )
 
     return (
@@ -64,17 +87,7 @@ class Cart extends React.Component {
           </div>
         </div>
         <div className="checkout-container">
-          <button
-            type="button"
-            id="checkout-btn"
-            onClick={() =>
-              console.log(
-                `Sign In or Continue as Guest for Cart Id #${
-                  this.props.match.params.id
-                } Checkout.`
-              )
-            }
-          >
+          <button type="button" id="checkout-btn" onClick={this.handleCheckout}>
             Check Out
           </button>
         </div>
@@ -96,8 +109,9 @@ const mapStateToProps = state => {
 const mapDispatch = dispatch => {
   return {
     getActivity: () => dispatch(fetchActivity()),
-    getSingleActivity: id => dispatch(fetchSingleActivity(id)),
-    remove: id => dispatch(removeOrderItem(id))
+    // getSingleActivity: id => dispatch(fetchSingleActivity(id)),
+    remove: id => dispatch(removeOrderItem(id)),
+    order: activityId => dispatch(orderActivity(activityId))
   }
 }
 

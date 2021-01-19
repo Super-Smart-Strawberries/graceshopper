@@ -7,7 +7,7 @@ const GET_SINGLE_ACTIVITY = 'GET_SINGLE_ACTIVITY'
 const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM'
 const REMOVE_ORDER_ITEM = 'REMOVE_ORDER_ITEM'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
-
+const ORDER_ACTIVITY = 'ORDER_ACTIVITY'
 /**
  * INITIAL STATE
  */
@@ -32,6 +32,11 @@ const updatedOrderItem = (qty, id) => ({
 
 const removedOrderItem = id => ({
   type: REMOVE_ORDER_ITEM,
+  id
+})
+
+const orderedActivity = id => ({
+  type: ORDER_ACTIVITY,
   id
 })
 /**
@@ -85,6 +90,14 @@ export const postOrderItem = (id, orderItem) => async dispatch => {
   }
 }
 
+export const orderActivity = id => async dispatch => {
+  try {
+    axios.put(`/api/purchase-activity/${id}`)
+    dispatch(orderedActivity(id))
+  } catch (error) {
+    console.log(error)
+  }
+}
 /**
  * REDUCER
  */
@@ -109,6 +122,8 @@ export default function activityReducer(state = initialState, action) {
       }
     case ADD_ORDER_ITEM:
       return action.orderItem
+    case ORDER_ACTIVITY:
+      return {...state, isOrdered: !state.isOrdered}
     default:
       return state
   }
