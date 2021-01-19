@@ -7,7 +7,8 @@ const GET_SINGLE_ACTIVITY = 'GET_SINGLE_ACTIVITY'
 const UPDATE_ORDER_ITEM = 'UPDATE_ORDER_ITEM'
 const REMOVE_ORDER_ITEM = 'REMOVE_ORDER_ITEM'
 const ADD_ORDER_ITEM = 'ADD_ORDER_ITEM'
-const ORDER_ACTIVITY = 'ORDER_ACTIVITY'
+const PURCHASE_ITEMS = 'PURCHASE_ITEMS'
+const CONFIRM_ORDER = 'CONFIRM_ORDER'
 /**
  * INITIAL STATE
  */
@@ -36,8 +37,13 @@ const removedOrderItem = id => ({
 })
 
 const orderedActivity = id => ({
-  type: ORDER_ACTIVITY,
+  type: PURCHASE_ITEMS,
   id
+})
+
+const confirmedOrder = order => ({
+  type: CONFIRM_ORDER,
+  order
 })
 /**
  * THUNK CREATORS
@@ -92,8 +98,17 @@ export const postOrderItem = (id, orderItem) => async dispatch => {
 
 export const orderActivity = id => async dispatch => {
   try {
-    axios.put(`/api/purchase-activity/${id}`)
+    await axios.put(`/api/purchase-activity/${id}`)
     dispatch(orderedActivity(id))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const confirmOrder = id => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/order-history/${id}`)
+    dispatch(confirmedOrder(data))
   } catch (error) {
     console.log(error)
   }
@@ -122,8 +137,10 @@ export default function activityReducer(state = initialState, action) {
       }
     case ADD_ORDER_ITEM:
       return action.orderItem
-    case ORDER_ACTIVITY:
+    case PURCHASE_ITEMS:
       return {...state, isOrdered: !state.isOrdered}
+    case CONFIRM_ORDER:
+      return action.order
     default:
       return state
   }

@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchActivity} from '../store/purchase-activity'
+import {confirmOrder} from '../store/purchase-activity'
 
 class Confirmation extends React.Component {
   componentDidMount() {
-    this.props.getActivity()
+    this.props.confirm(this.props.match.params.id)
   }
   render() {
     const {activity} = this.props
@@ -72,7 +72,7 @@ const mapStateToProps = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getActivity: () => dispatch(fetchActivity())
+    confirm: id => dispatch(confirmOrder(id))
   }
 }
 

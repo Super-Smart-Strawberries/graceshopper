@@ -2,12 +2,13 @@ const router = require('express').Router()
 const {PurchaseActivity, Toy, OrderItem} = require('../db/models')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/:activityId', async (req, res, next) => {
   try {
     if (req.user) {
       // Existing user
-      const usersCartInfo = await PurchaseActivity.findOne({
+      const confirmedOrder = await PurchaseActivity.findOne({
         where: {
+          id: req.params.activityId,
           isOrdered: true,
           userLoginId: req.user.id
         },
@@ -18,23 +19,10 @@ router.get('/', async (req, res, next) => {
           }
         ]
       })
-      res.send(usersCartInfo)
+      res.send(confirmedOrder)
     } else {
-      // Guest user
-      console.log(req.sessionID)
-      const guestCartInfo = await PurchaseActivity.findOne({
-        where: {
-          isOrdered: true,
-          guestId: req.sessionID
-        },
-        include: [
-          {
-            model: OrderItem,
-            include: [Toy]
-          }
-        ]
-      })
-      res.send(guestCartInfo)
+      // No user found
+      res.status(404).send('No user found')
     }
   } catch (err) {
     next(err)

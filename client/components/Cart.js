@@ -24,9 +24,8 @@ class Cart extends React.Component {
       window.alert('Your Cart is Empty :C')
     }
     try {
-      console.log('this.props.items.id from Cart', this.props.items.id)
       await this.props.order(this.props.items.id)
-      window.location.pathname = '/confirmation'
+      window.location.pathname = `/confirmation/${this.props.items.id}`
     } catch (err) {
       console.log(err)
     }
@@ -109,7 +108,6 @@ const mapStateToProps = state => {
 const mapDispatch = dispatch => {
   return {
     getActivity: () => dispatch(fetchActivity()),
-    // getSingleActivity: id => dispatch(fetchSingleActivity(id)),
     remove: id => dispatch(removeOrderItem(id)),
     order: activityId => dispatch(orderActivity(activityId))
   }

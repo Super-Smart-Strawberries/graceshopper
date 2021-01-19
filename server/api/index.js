@@ -1,7 +1,6 @@
 const router = require('express').Router()
 
 const isAdmin = (req, res, next) => {
-  console.log('REQQQQQQQQ', router.get.req)
   req.user.isAdmin
     ? next()
     : res.status(401).send('You do not have the permission to view this page')

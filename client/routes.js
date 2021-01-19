@@ -28,7 +28,6 @@ class Routes extends Component {
         <Route exact path="/toys" component={ToyList} />
         <Route exact path="/purchase-activity" component={Cart} />
         <Route exact path="/toys/:toyId" component={SingleToy} />
-        <Route exact path="/confirmation" component={Confirmation} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -37,7 +36,7 @@ class Routes extends Component {
             <Route exact path="/users/:userId" component={SingleUser} />
             <Route exact path="/purchase-activity" component={Cart} />
             <Route exact path="/toys/:toyId" component={SingleToy} />
-            <Route exact path="/confirmation" component={Confirmation} />
+            <Route exact path="/confirmation/:id" component={Confirmation} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

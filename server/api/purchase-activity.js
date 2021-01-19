@@ -21,7 +21,6 @@ router.get('/', async (req, res, next) => {
       res.send(usersCartInfo)
     } else {
       // Guest user
-      console.log(req.sessionID)
       const guestCartInfo = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
