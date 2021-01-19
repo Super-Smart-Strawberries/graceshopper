@@ -5,7 +5,8 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
-      const singleCartInfo = await PurchaseActivity.findOne({
+      // Existing user
+      const usersCartInfo = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
           userLoginId: req.user.id
@@ -17,9 +18,10 @@ router.get('/', async (req, res, next) => {
           }
         ]
       })
-      res.send(singleCartInfo)
+      res.send(usersCartInfo)
     } else {
-      const singleCartInfo = await PurchaseActivity.findOne({
+      // Guest user
+      const guestCartInfo = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
           guestId: req.sessionID
@@ -31,7 +33,7 @@ router.get('/', async (req, res, next) => {
           }
         ]
       })
-      res.send(singleCartInfo)
+      res.send(guestCartInfo)
     }
   } catch (err) {
     next(err)
@@ -46,5 +48,31 @@ router.post('/', async (req, res, next) => {
     res.send(newCartItem)
   } catch (error) {
     console.log(error)
+  }
+})
+
+router.put('/:activityId', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const ordered = await PurchaseActivity.update(
+        {isOrdered: true},
+        {
+          returning: true,
+          where: {
+            id: req.params.activityId,
+            userLoginId: req.user.id
+          }
+        }
+      )
+      if (ordered.length !== 2) {
+        return res.sendStatus(404)
+      }
+      const [numUpdated, [orderedActivity]] = ordered
+      res.send(orderedActivity)
+    } else {
+      res.send('Cannot be ordered!')
+    }
+  } catch (err) {
+    console.log(err)
   }
 })

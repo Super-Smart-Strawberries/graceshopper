@@ -21,7 +21,11 @@ class AddToCart extends Component {
     evt.preventDefault()
     try {
       await this.props.addToCart(this.props.singleToy.id, this.state)
-      // await this.props.addToOrderItem(this.state)
+      window.alert(
+        `${this.props.singleToy.name} x ${
+          this.state.quantity
+        } units added to Cart`
+      )
       this.setState({
         quantity: 1
       })
