@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleToy} from '../store/singleToy'
 import AddToCart from './AddToCart'
-import UpdateToy from './UpdateToy'
+import {Link} from 'react-router-dom'
 
 class SingleToy extends Component {
   componentDidMount() {
@@ -12,34 +12,41 @@ class SingleToy extends Component {
   render() {
     const {singleToy} = this.props
     const {reviews} = singleToy
-    console.log('this.props from SingleToy: ', this.props) // to be deleted
+    const {isAdmin} = this.props
     return (
       <div>
-        <h2>{singleToy.name}</h2>
-        <div>{singleToy.description}</div>
-        <div>${singleToy.price}</div>
-        <img src={singleToy.image} />
-        {reviews
-          ? reviews.map(review => (
-              <ul key={review.id}>
-                <li>Rating: {review.ratings}</li>
-                <li>{review.description}</li>
-              </ul>
-            ))
-          : null}
-        {singleToy.inventory === 0 ? (
-          <div>OUT OF STOCK</div>
+        {singleToy ? (
+          <div>
+            <h2>{singleToy.name}</h2>
+            <div>{singleToy.description}</div>
+            <div>${singleToy.price}</div>
+            <img src={singleToy.image} />
+            {reviews && reviews.length
+              ? reviews.map(review => (
+                  <ul key={review.id}>
+                    <li>Rating: {review.ratings}</li>
+                    <li>{review.description}</li>
+                  </ul>
+                ))
+              : ''}
+            {singleToy.inventory === 0 ? (
+              <div>OUT OF STOCK</div>
+            ) : (
+              <AddToCart singleToy={singleToy} />
+            )}
+            {isAdmin ? <Link to={`${singleToy.id}/edit`}>Edit Toy</Link> : ''}
+          </div>
         ) : (
-          <AddToCart singleToy={singleToy} />
+          'Item with this id does not exist'
         )}
-        {<UpdateToy toy={singleToy} />}
       </div>
     )
   }
 }
 
 const mapState = state => ({
-  singleToy: state.singleToy
+  singleToy: state.singleToy,
+  isAdmin: state.user.isAdmin
 })
 
 const mapDispatch = dispatch => ({

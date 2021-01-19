@@ -14,7 +14,6 @@ class AllUsers extends React.Component {
 
   render() {
     const {users} = this.props
-    console.log('users ', users)
     return (
       <div id="user-directory">
         <h1>User Directory:</h1>

@@ -1,32 +1,26 @@
-import React from 'react'
-import axios from 'axios'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import deleteToy from '../store/singleToy'
+import {deleteToy, fetchSingleToy, editToy} from '../store/singleToy'
+import {Link} from 'react-router-dom'
 
-class UpdateToy extends React.Component {
+class UpdateToy extends Component {
   constructor(props) {
     super(props)
-    //let toy = this.props.singleToy
-    //console.log('state in UpdateToy: ', this.state)
+    const toy = this.props.singleToy
     this.state = {
-      name: this.props.toy.name,
-      description: this.props.toy.description,
-      price: this.props.toy.price,
-      image: this.props.toy.image,
-      inventory: this.props.toy.inventory
+      name: toy.name,
+      description: toy.description,
+      price: toy.price,
+      image: toy.image,
+      inventory: toy.inventory
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
-    this.setState({
-      name: this.props.toy.name,
-      description: this.props.toy.description,
-      price: this.props.toy.price,
-      image: this.props.toy.image,
-      inventory: this.props.toy.inventory
-    })
+    const {toyId} = this.props.match.params
+    this.props.setSingleToy(toyId)
   }
 
   handleChange(evt) {
@@ -37,88 +31,94 @@ class UpdateToy extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault()
-    const toyId = this.props.toy.id
-    try {
-      const res = await axios.put(`/api/toys/${toyId}`, this.state)
-      this.props.UpdateToy(res.data)
-    } catch (err) {
-      console.log('unable to update toy: ', err)
-    }
+    const id = this.props.singleToy.id
+    this.props.updateToy(id, this.state)
   }
 
-  async handleDelete(toyId) {
-    try {
-      await axios.delete(`/api/toys/${toyId}`)
-      this.props.deleteToy(toyId)
-    } catch (err) {
-      console.error(err)
-    }
+  handleDelete(toyId) {
+    this.props.removeToy(toyId)
   }
 
   render() {
+    const toy = this.props.singleToy
     return (
-      <div id="update-toy">
-        <form id="update-toy-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="name">Toy Name:</label>
-          <input
-            name="name"
-            type="text"
-            onChange={this.handleChange}
-            defaultValue={this.props.toy.name}
-          />
-          <br />
-          <input
-            name="description"
-            type="text"
-            onChange={this.handleChange}
-            defaultValue={this.props.toy.description}
-          />
-          <br />
-          <input
-            name="price"
-            type="number"
-            onChange={this.handleChange}
-            defaultValue={this.props.toy.price}
-          />
-          <br />
-          <input
-            name="image"
-            type="text"
-            onChange={this.handleChange}
-            defaultValue={this.props.toy.image}
-          />
-          <br />
-          <input
-            name="inventory"
-            type="number"
-            onChange={this.handleChange}
-            defaultValue={this.props.toy.inventory}
-          />
-          <br />
-          <button type="submit" id="update-btn">
-            Submit
-          </button>
-          <button
-            type="submit"
-            id="delete-btn"
-            onClick={() => this.handleDelete(this.props.toy.id)}
-          >
-            Delete
-          </button>
-        </form>
+      <div>
+        {toy.id ? (
+          <div>
+            <div>
+              <Link to={`/toys/${toy.id}`}>Back to Toy</Link>
+            </div>
+            <div id="update-toy">
+              <form id="update-toy-form" onSubmit={this.handleSubmit}>
+                <label htmlFor="name">Toy Name:</label>
+                <input
+                  name="name"
+                  type="text"
+                  onChange={this.handleChange}
+                  defaultValue={toy.name}
+                />
+                <br />
+                <input
+                  name="description"
+                  type="text"
+                  onChange={this.handleChange}
+                  defaultValue={toy.description}
+                />
+                <br />
+                <input
+                  name="price"
+                  type="number"
+                  onChange={this.handleChange}
+                  defaultValue={toy.price}
+                />
+                <br />
+                <input
+                  name="image"
+                  type="text"
+                  onChange={this.handleChange}
+                  defaultValue={toy.image}
+                />
+                <br />
+                <input
+                  name="inventory"
+                  type="number"
+                  onChange={this.handleChange}
+                  defaultValue={toy.inventory}
+                />
+                <br />
+                <button type="submit" id="update-btn">
+                  Update
+                </button>
+              </form>
+            </div>
+            <div>
+              <button
+                type="submit"
+                id="delete-btn"
+                onClick={() => this.handleDelete(toy.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ) : (
+          'This item has been permanently deleted'
+        )}
       </div>
     )
   }
 }
 
-// const mapState = (state) => {
-//   return {
-//     toy: state.toy,
-//   }
-// }
+const mapState = state => {
+  return {
+    singleToy: state.singleToy
+  }
+}
 
 const mapDispatch = dispatch => ({
-  removeToy: toyId => dispatch(deleteToy(toyId))
+  removeToy: toyId => dispatch(deleteToy(toyId)),
+  setSingleToy: toyId => dispatch(fetchSingleToy(toyId)),
+  updateToy: (id, toy) => dispatch(editToy(id, toy))
 })
 
-export default connect(null, mapDispatch)(UpdateToy)
+export default connect(mapState, mapDispatch)(UpdateToy)

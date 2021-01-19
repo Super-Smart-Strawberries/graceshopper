@@ -44,7 +44,7 @@ router.post('/', isAdmin, async (req, res, next) => {
 
 router.put('/:toyId', isAdmin, async (req, res, next) => {
   try {
-    const toy = await Toy.findbyPk(req.params.toyId)
+    const toy = await Toy.findByPk(req.params.toyId)
     await toy.update(req.body)
     res.send(toy)
   } catch (err) {
@@ -54,12 +54,11 @@ router.put('/:toyId', isAdmin, async (req, res, next) => {
 })
 
 router.delete('/:toyId', isAdmin, async (req, res, next) => {
+  console.log(req.params)
   try {
-    await Toy.destroy({
-      where: {
-        toyId: req.params.toyId
-      }
-    })
+    const {toyId} = req.params
+    const toyToDelete = await Toy.findByPk(toyId)
+    await toyToDelete.destroy()
     res.status(204).end()
   } catch (err) {
     console.log('problem deleting toy! ', err)
