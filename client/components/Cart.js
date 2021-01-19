@@ -1,57 +1,59 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {fetchSingleActivity} from '../store/purchase-activity'
+import {removeOrderItem, fetchActivity} from '../store/purchase-activity'
+import UpdateOrderItem from './UpdateOrderItem'
 
 //cart items will be held in state
 
 class Cart extends React.Component {
   componentDidMount() {
-    this.props.getActivity(this.props.match.params.id)
+    this.props.getActivity()
   }
-
   render() {
-    const {items} = this.props
+    const {items, remove} = this.props
     const {orderItems} = items
-    console.log('this.props from Cart: ', this.props)
 
-    let cartItems = !items.id ? (
-      <div>
-        <p>Your Cart is Empty :C</p>
-      </div>
-    ) : (
-      <div>
-        {orderItems.map(orderItem => {
-          const {toy} = orderItem
-          return (
-            <li key={orderItem.id} className="cart-list">
-              <div className="item-img">
-                <img src={toy.image} height="100" />
-              </div>
-              <div className="item-desc">
-                <span className="item-name">
-                  <b>{toy.name}</b>
-                </span>
-                <p>Description: {toy.description}</p>
-                <p>Unit Price: ${toy.price}</p>
-                <p>Quantity: {orderItem.quantity}</p>
-                <p>
-                  Subtotal Price: <b>${toy.price * orderItem.quantity}</b>
-                </p>
-              </div>
-            </li>
-          )
-        })}
+    let cartItems =
+      items.id && orderItems ? (
         <div>
-          <h2>
-            Total Price: $
-            {orderItems
-              .map(item => item.toy.price * item.quantity)
-              .reduce((total, subtotal) => total + subtotal)}
-          </h2>
+          {orderItems.map(orderItem => {
+            const {toy} = orderItem
+            return (
+              <li key={orderItem.id} className="cart-list">
+                <div className="item-img">
+                  <img src={toy.image} height="100" />
+                </div>
+                <div className="item-desc">
+                  <span className="item-name">
+                    <b>{toy.name}</b>
+                  </span>
+                  <p>Description: {toy.description}</p>
+                  <p>Unit Price: ${toy.price}</p>
+                  <UpdateOrderItem orderItem={orderItem} />
+                </div>
+                <div>
+                  <button type="button" onClick={() => remove(orderItem.id)}>
+                    Remove Order Item
+                  </button>
+                </div>
+              </li>
+            )
+          })}
+          <div>
+            <h2>
+              Total Price: $
+              {orderItems
+                .map(item => item.toy.price * item.quantity)
+                .reduce((total, subtotal) => total + subtotal)
+                .toFixed(2)}
+            </h2>
+          </div>
         </div>
-      </div>
-    )
+      ) : (
+        <div>
+          <p>Your Cart is Empty :C</p>
+        </div>
+      )
 
     return (
       <div>
@@ -90,9 +92,12 @@ const mapStateToProps = state => {
     items: state.activity
   }
 }
+
 const mapDispatch = dispatch => {
   return {
-    getActivity: id => dispatch(fetchSingleActivity(id))
+    getActivity: () => dispatch(fetchActivity()),
+    getSingleActivity: id => dispatch(fetchSingleActivity(id)),
+    remove: id => dispatch(removeOrderItem(id))
   }
 }
 

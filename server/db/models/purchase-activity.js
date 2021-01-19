@@ -5,6 +5,9 @@ const PurchaseActivity = db.define('purchaseActivity', {
   isOrdered: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  guestId: {
+    type: Sequelize.STRING
   }
 })
 
