@@ -53,6 +53,7 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:activityId', async (req, res, next) => {
   try {
+    //loggedin User
     if (req.user) {
       const ordered = await PurchaseActivity.update(
         {isOrdered: true},
