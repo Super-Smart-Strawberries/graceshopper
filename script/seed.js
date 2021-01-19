@@ -18,7 +18,7 @@ const {
   OrderItem,
   UserInfo
 } = require('../server/db/models')
-const {act} = require('react-test-renderer')
+// const {act} = require('react-test-renderer')
 
 const toyOne = {
   name: 'rubber ducky',
@@ -103,6 +103,7 @@ async function seed() {
   const orderItem = await OrderItem.bulkCreate(orderItems)
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${createdToys.length} toys`)
   console.log(`seeded successfully`)
 }
 
