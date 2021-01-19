@@ -4,13 +4,16 @@ module.exports = router
 
 router.get('/:activityId', async (req, res, next) => {
   try {
-    if (req.user) {
+    const {user} = req
+    const {id} = user
+    const {activityId} = req.params
+    if (user) {
       // Existing user
       const confirmedOrder = await PurchaseActivity.findOne({
         where: {
-          id: req.params.activityId,
+          id: activityId,
           isOrdered: true,
-          userLoginId: req.user.id
+          userLoginId: id
         },
         include: [
           {

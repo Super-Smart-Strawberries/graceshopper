@@ -4,12 +4,15 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    if (req.user) {
+    const {user} = req
+    const {id} = user
+    const guestId = req.sessionID
+    if (user) {
       // Existing user
       const usersCartInfo = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
-          userLoginId: req.user.id
+          userLoginId: id
         },
         include: [
           {
@@ -24,7 +27,7 @@ router.get('/', async (req, res, next) => {
       const guestCartInfo = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
-          guestId: req.sessionID
+          guestId: guestId
         },
         include: [
           {
@@ -42,8 +45,9 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    const {id} = req.user
     const newCartItem = await PurchaseActivity.create({
-      userLoginId: req.user.id
+      userLoginId: id
     })
     res.send(newCartItem)
   } catch (error) {
@@ -53,14 +57,17 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:activityId', async (req, res, next) => {
   try {
-    if (req.user) {
+    const {user} = req
+    const {id} = user
+    const {activityId} = req.params
+    if (user) {
       const ordered = await PurchaseActivity.update(
         {isOrdered: true},
         {
           returning: true,
           where: {
-            id: req.params.activityId,
-            userLoginId: req.user.id
+            id: activityId,
+            userLoginId: id
           }
         }
       )
