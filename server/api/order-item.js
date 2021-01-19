@@ -17,7 +17,8 @@ router.put('/update/:orderItemId', async (req, res, next) => {
       // Existing user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.user.id
+          userLoginId: req.user.id,
+          isOrdered: false
         }
       })
       const updated = await OrderItem.update(req.body, {
@@ -27,17 +28,18 @@ router.put('/update/:orderItemId', async (req, res, next) => {
           purchaseActivityId: dataValues.id
         }
       })
-      if (updated.length !== 2) {
+      const [numUpdated, [updatedOrder]] = updated
+      if (!numUpdated) {
         // orderItem was not found
         return res.sendStatus(404)
       }
-      const [numUpdated, [updatedOrder]] = updated
       res.send(updatedOrder)
     } else {
       // Guest user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.sessionID
+          userLoginId: req.user.id,
+          isOrdered: false
         }
       })
       const updated = await OrderItem.update(req.body, {
@@ -47,11 +49,11 @@ router.put('/update/:orderItemId', async (req, res, next) => {
           purchaseActivityId: dataValues.id
         }
       })
-      if (updated.length !== 2) {
+      const [numUpdated, [updatedOrder]] = updated
+      if (!numUpdated) {
         // orderItem was not found
         return res.sendStatus(404)
       }
-      const [numUpdated, [updatedOrder]] = updated
       res.send(updatedOrder)
     }
   } catch (err) {
@@ -65,7 +67,8 @@ router.delete('/delete/:orderItemId', async (req, res, next) => {
       // Existing user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.user.id
+          userLoginId: req.user.id,
+          isOrdered: false
         }
       })
       await OrderItem.destroy({
@@ -79,7 +82,8 @@ router.delete('/delete/:orderItemId', async (req, res, next) => {
       // Guest user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.sesisonID
+          userLoginId: req.sesisonID,
+          isOrdered: false
         }
       })
       await OrderItem.destroy({
