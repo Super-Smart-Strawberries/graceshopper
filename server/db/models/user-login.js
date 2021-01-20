@@ -24,6 +24,7 @@ const UserLogin = db.define('userLogin', {
       notEmpty: true,
       notContains: ['password', 'abc']
     },
+    // allowNull: false,
     get() {
       return () => this.getDataValue('password')
     }
