@@ -29,12 +29,9 @@ class Confirmation extends React.Component {
                     <b>{toy.name}</b>
                   </span>
                   <p>Description: {toy.description}</p>
-                  <p>Unit Price: ${toy.price}</p>
+                  <p>Unit Price: ${toy.price / 100}</p>
                   <p>Quantity: {orderItem.quantity}</p>
-                  <p>
-                    Subtotal Price: $
-                    {(toy.price * orderItem.quantity).toFixed(2)}
-                  </p>
+                  <p>Subtotal Price: ${toy.price / 100 * orderItem.quantity}</p>
                 </div>
               </li>
             )
@@ -43,9 +40,8 @@ class Confirmation extends React.Component {
             <h2>
               Total Price: $
               {orderItems
-                .map(item => item.toy.price * item.quantity)
-                .reduce((total, subtotal) => total + subtotal)
-                .toFixed(2)}
+                .map(item => item.toy.price / 100 * item.quantity)
+                .reduce((total, subtotal) => total + subtotal)}
             </h2>
           </div>
         </div>

@@ -10,9 +10,9 @@ const Toy = db.define('toy', {
     type: Sequelize.TEXT
   },
   price: {
-    type: Sequelize.DECIMAL(10, 2),
+    type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 10.0
+    defaultValue: 1000
   },
   image: {
     type: Sequelize.STRING,
