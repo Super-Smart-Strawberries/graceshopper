@@ -66,14 +66,15 @@ router.delete('/:toyId', isAdmin, async (req, res, next) => {
 
 router.post('/:toyId', async (req, res, next) => {
   try {
-    // const user = req.user
-    // const id = user.user.id
     const {quantity} = req.body
     const {toyId} = req.params
-    // req.session.guestId = Math.floor(Math.random() * (10000000 - 10000) + 10000)
-    // const guestId = req.session.guestId
-    const guestId = Math.floor(Math.random() * (10000000 - 10000) + 10000)
-
+    const guestId = req.sessionID
+    if (!req.session.guestId) {
+      req.session.guestId = guestId
+      console.log(req.session.guestId)
+    } else {
+      console.log(req.session.guestId)
+    }
     if (req.user) {
       // Logged-in user
       const foundOrCreated = await PurchaseActivity.findOrCreate({
@@ -83,7 +84,6 @@ router.post('/:toyId', async (req, res, next) => {
         }
       })
       const [activity, isFound] = foundOrCreated
-
       const newOrderItem = await OrderItem.create({
         quantity: quantity,
         toyId: toyId
@@ -95,7 +95,7 @@ router.post('/:toyId', async (req, res, next) => {
       const foundOrCreated = await PurchaseActivity.findOrCreate({
         where: {
           isOrdered: false,
-          guestId: guestId
+          guestId: req.session.guestId
         }
       })
       const [activity, isFound] = foundOrCreated
@@ -110,73 +110,3 @@ router.post('/:toyId', async (req, res, next) => {
     console.log(error)
   }
 })
-
-// router.post('/:toyId', async (req, res, next) => {
-//   try {
-//     const {user} = req
-//     const {id} = user
-//     const {quantity} = req.body
-//     const {toyId} = req.params
-//     const guestId = req.sessionID
-
-//     if (user) {
-//       // Logged-in user
-//       const previousActivity = await PurchaseActivity.findOne({
-//         where: {
-//           isOrdered: false,
-//           userLoginId: id,
-//         },
-//       })
-//       if (previousActivity) {
-//         // Existing activity
-//         const newOrderItem = await OrderItem.create({
-//           quantity: quantity,
-//           toyId: toyId,
-//         })
-//         await newOrderItem.setPurchaseActivity(previousActivity)
-//         res.send(newOrderItem)
-//       } else {
-//         // New activity to be generated
-//         const newPurchaseActivity = await PurchaseActivity.create({
-//           userLoginId: id,
-//         })
-//         const newOrderItem = await OrderItem.create({
-//           quantity: quantity,
-//           toyId: toyId,
-//         })
-//         await newOrderItem.setPurchaseActivity(newPurchaseActivity)
-//         res.send(newOrderItem)
-//       }
-//     } else {
-//       // Guest user
-//       const previousActivity = await PurchaseActivity.findOne({
-//         where: {
-//           isOrdered: false,
-//           guestId: guestId,
-//         },
-//       })
-//       if (previousActivity) {
-//         // Existing activity
-//         const newOrderItem = await OrderItem.create({
-//           quantity: quantity,
-//           toyId: toyId,
-//         })
-//         await newOrderItem.setPurchaseActivity(previousActivity)
-//         res.send(newOrderItem)
-//       } else {
-//         // New activity to be generated
-//         const newPurchaseActivity = await PurchaseActivity.create({
-//           guestId: guestId,
-//         })
-//         const newOrderItem = await OrderItem.create({
-//           quantity: quantity,
-//           toyId: toyId,
-//         })
-//         await newOrderItem.setPurchaseActivity(newPurchaseActivity)
-//         res.send(newOrderItem)
-//       }
-//     }
-//   } catch (error) {
-//     console.log(error)
-//   }
-// })

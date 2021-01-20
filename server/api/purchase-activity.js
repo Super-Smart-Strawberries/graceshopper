@@ -6,7 +6,6 @@ router.get('/', async (req, res, next) => {
   try {
     // const {user} = req
     // const {id} = user
-    const guestId = req.sessionID
     if (req.user) {
       // Existing user
       const usersCartInfo = await PurchaseActivity.findOne({
@@ -26,7 +25,8 @@ router.get('/', async (req, res, next) => {
       // Guest user
       const guestCartInfo = await PurchaseActivity.findOne({
         where: {
-          isOrdered: false
+          isOrdered: false,
+          guestId: req.session.guestId
         },
         include: [
           {

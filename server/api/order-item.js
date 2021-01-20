@@ -69,15 +69,13 @@ router.put('/update/:orderItemId', async (req, res, next) => {
 
 router.delete('/delete/:orderItemId', async (req, res, next) => {
   try {
-    const {user} = req
-    const {id} = user
-    const {orderItemId} = req.params
-    const guestId = req.sessionID
-    if (user) {
+    const orderItemId = req.params.orderItemId
+    if (req.user) {
+      const userId = req.user.id
       // Existing user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: id,
+          userLoginId: userId,
           isOrdered: false
         }
       })
@@ -92,7 +90,7 @@ router.delete('/delete/:orderItemId', async (req, res, next) => {
       // Guest user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          guestId: guestId,
+          guestId: req.session.guestId,
           isOrdered: false
         }
       })
