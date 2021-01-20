@@ -12,12 +12,12 @@ class ToyList extends Component {
     const {toys} = this.props
     return (
       <div>
-        <ul>
+        <ul className="toy-list">
           {toys === undefined ? (
             <h3>Loading Toys...</h3>
           ) : toys.length ? (
             toys.map(toy => (
-              <li key={toy.id}>
+              <li className="toy-list-item" key={toy.id}>
                 <div>
                   <img src={toy.image} height="100" />
                 </div>
