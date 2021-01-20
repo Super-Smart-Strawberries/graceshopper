@@ -14,12 +14,10 @@ router.post('/', async (req, res, next) => {
 
 router.put('/update/:orderItemId', async (req, res, next) => {
   try {
-    const {user} = req
-    const {id} = user
     const data = req.body
     const {orderItemId} = req.params
-    const guestId = req.sessionID
-    if (user) {
+    if (req.user) {
+      const id = req.user.id
       // Existing user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
@@ -44,7 +42,7 @@ router.put('/update/:orderItemId', async (req, res, next) => {
       // Guest user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          guestId: guestId,
+          guestId: req.session.guestId,
           isOrdered: false
         }
       })
