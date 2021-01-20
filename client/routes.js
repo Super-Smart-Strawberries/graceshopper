@@ -19,7 +19,6 @@ import {
 import {me} from './store'
 import Confirmation from './components/Confirmation'
 
-
 /**
  * COMPONENT
  */
