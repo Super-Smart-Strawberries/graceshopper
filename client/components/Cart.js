@@ -19,8 +19,10 @@ class Cart extends React.Component {
   }
   async handleCheckout() {
     const {orderItems} = this.props.items
-
-    if (!orderItems || !orderItems.length) {
+    const {userLoginId} = this.props.items
+    if (!userLoginId) {
+      window.alert('Sorry! User must be logged in to checkout')
+    } else if (!orderItems || !orderItems.length) {
       window.alert('Your Cart is Empty :C')
     }
     try {
@@ -30,7 +32,6 @@ class Cart extends React.Component {
       console.log(err)
     }
   }
-
   render() {
     const {items, remove} = this.props
     const {orderItems} = items
@@ -54,8 +55,8 @@ class Cart extends React.Component {
                     <b>{toy.name}</b>
                   </span>
                   <p>Description: {toy.description}</p>
-                  <p>Unit Price: ${toy.price}</p>
-                  <UpdateOrderItem orderItem={orderItem} />
+                  <p>Unit Price: ${toy.price / 100}</p>
+                  <UpdateOrderItem orderItem={orderItem} toy={toy} />
                 </div>
                 <div>
                   <button
@@ -74,8 +75,7 @@ class Cart extends React.Component {
               Total Price: $
               {orderItems
                 .map(item => item.toy.price * item.quantity)
-                .reduce((total, subtotal) => total + subtotal)
-                .toFixed(2)}
+                .reduce((total, subtotal) => total + subtotal) / 100}
             </h2>
           </div>
         </div>

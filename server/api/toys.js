@@ -66,68 +66,45 @@ router.delete('/:toyId', isAdmin, async (req, res, next) => {
 
 router.post('/:toyId', async (req, res, next) => {
   try {
-    const {user} = req
-    const {id} = user
     const {quantity} = req.body
     const {toyId} = req.params
     const guestId = req.sessionID
-
-    if (user) {
-      // Logged-in user
-      const previousActivity = await PurchaseActivity.findOne({
-        where: {
-          isOrdered: false,
-          userLoginId: id
-        }
-      })
-      if (previousActivity) {
-        // Existing activity
-        const newOrderItem = await OrderItem.create({
-          quantity: quantity,
-          toyId: toyId
-        })
-        await newOrderItem.setPurchaseActivity(previousActivity)
-        res.send(newOrderItem)
-      } else {
-        // New activity to be generated
-        const newPurchaseActivity = await PurchaseActivity.create({
-          userLoginId: id
-        })
-        const newOrderItem = await OrderItem.create({
-          quantity: quantity,
-          toyId: toyId
-        })
-        await newOrderItem.setPurchaseActivity(newPurchaseActivity)
-        res.send(newOrderItem)
-      }
+    if (!req.session.guestId) {
+      req.session.guestId = guestId
+      console.log(req.session.guestId)
     } else {
-      // Guest user
-      const previousActivity = await PurchaseActivity.findOne({
+      console.log(req.session.guestId)
+    }
+    if (req.user) {
+      // Logged-in user
+      const foundOrCreated = await PurchaseActivity.findOrCreate({
         where: {
           isOrdered: false,
-          guestId: guestId
+          userLoginId: req.user.id
         }
       })
-      if (previousActivity) {
-        // Existing activity
-        const newOrderItem = await OrderItem.create({
-          quantity: quantity,
-          toyId: toyId
-        })
-        await newOrderItem.setPurchaseActivity(previousActivity)
-        res.send(newOrderItem)
-      } else {
-        // New activity to be generated
-        const newPurchaseActivity = await PurchaseActivity.create({
-          guestId: guestId
-        })
-        const newOrderItem = await OrderItem.create({
-          quantity: quantity,
-          toyId: toyId
-        })
-        await newOrderItem.setPurchaseActivity(newPurchaseActivity)
-        res.send(newOrderItem)
-      }
+      const [activity, isFound] = foundOrCreated
+      const newOrderItem = await OrderItem.create({
+        quantity: quantity,
+        toyId: toyId
+      })
+      await newOrderItem.setPurchaseActivity(activity)
+      res.send(newOrderItem)
+    } else {
+      // guest user
+      const foundOrCreated = await PurchaseActivity.findOrCreate({
+        where: {
+          isOrdered: false,
+          guestId: req.session.guestId
+        }
+      })
+      const [activity, isFound] = foundOrCreated
+      const newOrderItem = await OrderItem.create({
+        quantity: quantity,
+        toyId: toyId
+      })
+      await newOrderItem.setPurchaseActivity(activity)
+      res.send(newOrderItem)
     }
   } catch (error) {
     console.log(error)

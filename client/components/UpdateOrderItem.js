@@ -11,7 +11,7 @@ const UpdateOrderItem = props => {
   }
 
   let qtyNum = []
-  for (let i = 1; i <= 50; i++) {
+  for (let i = 1; i <= toy.inventory; i++) {
     qtyNum.push(
       <option key={i} value={i}>
         {i}
@@ -28,7 +28,7 @@ const UpdateOrderItem = props => {
         </select>
       </p>
       <p>
-        Subtotal Price: <b>${(toy.price * orderItem.quantity).toFixed(2)}</b>
+        Subtotal Price: <b>${toy.price * orderItem.quantity / 100}</b>
       </p>
     </div>
   )
