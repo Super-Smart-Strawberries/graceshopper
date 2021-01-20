@@ -5,7 +5,6 @@ module.exports = router
 
 router.get('/', isAdmin, async (req, res, next) => {
   try {
-    console.log('THIS IS REQ INSIDE THE GET ROUTE', req.user.isAdmin)
     const users = await UserLogin.findAll({
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
