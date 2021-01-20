@@ -4,15 +4,15 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const {user} = req
-    const {id} = user
+    // const {user} = req
+    // const {id} = user
     const guestId = req.sessionID
-    if (user) {
+    if (req.user) {
       // Existing user
       const usersCartInfo = await PurchaseActivity.findOne({
         where: {
           isOrdered: false,
-          userLoginId: id
+          userLoginId: req.user.id
         },
         include: [
           {
@@ -26,8 +26,7 @@ router.get('/', async (req, res, next) => {
       // Guest user
       const guestCartInfo = await PurchaseActivity.findOne({
         where: {
-          isOrdered: false,
-          guestId: guestId
+          isOrdered: false
         },
         include: [
           {

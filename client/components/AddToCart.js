@@ -16,7 +16,6 @@ class AddToCart extends Component {
       [evt.target.name]: evt.target.value
     })
   }
-
   async handleSubmit(evt) {
     evt.preventDefault()
     try {
@@ -36,14 +35,13 @@ class AddToCart extends Component {
   render() {
     const {singleToy} = this.props
     let qtyNum = []
-    for (let i = 1; i <= 50; i++) {
+    for (let i = 1; i <= singleToy.inventory; i++) {
       qtyNum.push(
         <option key={i} value={i}>
           Qty: {i}
         </option>
       )
     }
-
     return (
       <div>
         {singleToy.inventory < 10 ? (
@@ -73,9 +71,8 @@ const mapState = state => ({
   orderItem: state.orderItem
 })
 
-const mapDispatch = disptach => ({
-  addToCart: (id, newOrderItem) => disptach(postOrderItem(id, newOrderItem))
-  // addToOrderItem: (newOrder) => disptach(postOrder(newOrder)),
+const mapDispatch = dispatch => ({
+  addToCart: (id, newOrderItem) => dispatch(postOrderItem(id, newOrderItem))
 })
 
 export default connect(mapState, mapDispatch)(AddToCart)
