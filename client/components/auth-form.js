@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
@@ -9,6 +9,17 @@ import {auth} from '../store'
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleEmailInput = e => {
+    setEmail(e.target.value)
+  }
+
+  const handlePasswordInput = e => {
+    setPassword(e.target.value)
+  }
+
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
@@ -16,16 +27,30 @@ const AuthForm = props => {
           <label htmlFor="email">
             <small>Email</small>
           </label>
-          <input name="email" type="text" />
+          <input
+            name="email"
+            type="text"
+            onChange={handleEmailInput}
+            value={email}
+            placeholder="Your Email"
+          />
         </div>
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <input
+            name="password"
+            type="password"
+            onChange={handlePasswordInput}
+            value={password}
+            placeholder="Your Password"
+          />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button type="submit" disabled={!email || !password}>
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
@@ -81,3 +106,5 @@ AuthForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
+
+export default AuthForm

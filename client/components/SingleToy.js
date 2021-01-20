@@ -34,6 +34,7 @@ class SingleToy extends Component {
             </div>
 
             <br />
+
             {singleToy.inventory === 0 ? (
               <div>OUT OF STOCK</div>
             ) : (
