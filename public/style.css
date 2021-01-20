@@ -8,9 +8,6 @@
 body {
   font-family: sans-serif;
   background-color: rgb(206, 236, 255);
-  /* background-image: url('./sa_pixar_virtualbg_toystory_16x9_8461039f.jpeg'); */
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -19,20 +16,26 @@ body {
   flex-direction: column;
   align-content: center;
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
   font-family: 'AgentRed';
   letter-spacing: -0.3em;
   font-size: 4rem;
+  width: 100vw;
   color: red;
+  align-self: center;
   -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: royalblue;
+  -webkit-text-stroke-color: rgb(37, 77, 199);
   background-color: rgb(255, 234, 0);
+  margin-bottom: -10px;
+  margin: 0px;
 }
 
 a {
   text-decoration: none;
+  color: rgb(19, 62, 192);
 }
 
 label {
@@ -53,14 +56,14 @@ form div {
   display: flex;
   flex-wrap: wrap;
   width: calc(100%-5em);
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-content: flex-start;
 }
 
 .toy-list-item {
   height: 150px;
   width: 150px;
-  padding: 10px;
+  padding: 0px;
   margin: 10px;
   word-wrap: normal;
   background: white;
@@ -68,4 +71,48 @@ form div {
 
 ul {
   list-style-type: none;
+  padding: 0px;
+}
+
+nav {
+  font-family: 'Staatliches', cursive;
+  font-size: 1.5rem;
+  height: 60px;
+}
+
+button {
+  border-radius: 8px;
+  background-color: rgb(19, 62, 192);
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+  font-family: 'Staatliches';
+  font-size: 2rem;
+}
+
+.cart-list {
+  width: 50vw;
+  padding: 20px;
+  display: flex;
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+.cart {
+  justify-content: space-around;
+  text-align: left;
+  margin: 20px;
+  margin-left: 75px;
+}
+
+.remove-btn {
+  width: 100px;
+}
+
+#checkout-btn {
+  padding: 10px;
+  font-weight: bolder;
+  font-size: 1rem;
 }

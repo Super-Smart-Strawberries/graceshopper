@@ -20,20 +20,26 @@ class SingleToy extends Component {
             <h2>{singleToy.name}</h2>
             <div>{singleToy.description}</div>
             <div>${singleToy.price}</div>
-            <img src={singleToy.image} height="300"/>
-            {reviews && reviews.length
-              ? reviews.map(review => (
-                  <ul key={review.id}>
-                    <li>Rating: {review.ratings}</li>
-                    <li>{review.description}</li>
-                  </ul>
-                ))
-              : ''}
+            <img src={singleToy.image} height="300" />
+            <br />
+            <div id="review-container">
+              {reviews && reviews.length
+                ? reviews.map(review => (
+                    <ul key={review.id}>
+                      <li>Rating: {review.ratings}</li>
+                      <li>{review.description}</li>
+                    </ul>
+                  ))
+                : ''}
+            </div>
+
+            <br />
             {singleToy.inventory === 0 ? (
               <div>OUT OF STOCK</div>
             ) : (
               <AddToCart singleToy={singleToy} />
             )}
+            <br />
             {isAdmin ? <Link to={`${singleToy.id}/edit`}>Edit Toy</Link> : ''}
           </div>
         ) : (
