@@ -23,7 +23,7 @@ const {
 const toyOne = {
   name: 'rubber ducky',
   description: 'the one friend on your desk',
-  price: 1550,
+  price: 15000,
   image:
     'https://cdn.shopify.com/s/files/1/0012/4482/3632/products/duck_1200x.jpg?v=1583533109',
   inventory: 20
@@ -42,14 +42,14 @@ const reviewTwo = {
 const toyTwo = {
   name: 'Lovely Duckly',
   description: 'Rubber Ducky',
-  price: 15098,
+  price: 1500,
   inventory: 15
 }
 
 const toyThree = {
   name: 'angry ducky',
   description: 'heated',
-  price: 100099,
+  price: 1000,
   inventory: 30
 }
 
