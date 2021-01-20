@@ -18,7 +18,6 @@ const {
   OrderItem,
   UserInfo
 } = require('../server/db/models')
-//const {act} = require('react-test-renderer')
 
 const toyOne = {
   name: 'rubber ducky',
