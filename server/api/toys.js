@@ -15,14 +15,23 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:toyId', async (req, res, next) => {
+  const {toyId} = req.params
   try {
-    const toy = await Toy.findByPk(req.params.toyId, {
+    const toy = await Toy.findByPk(toyId, {
       include: [
         {
           model: Review
         }
       ]
     })
+    if (isNaN(Number(toyId))) {
+      res.status(400).send('This is not a valid product ID')
+      return
+    }
+    if (!toyId) {
+      res.status(404).send('Product with this id was not found')
+      return
+    }
     res.send(toy)
   } catch (err) {
     next(err)

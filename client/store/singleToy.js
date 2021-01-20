@@ -69,8 +69,8 @@ export const editToy = (id, toy) => {
 export const createToy = toy => {
   return async dispatch => {
     try {
-      const newToy = await axios.post('/api/toys')
-      dispatch(createdToy(newToy))
+      const {data} = await axios.post('/api/toys', toy)
+      dispatch(createdToy(data))
     } catch (err) {
       console.error(err)
     }

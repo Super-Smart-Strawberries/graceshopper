@@ -24,17 +24,21 @@ class AddToy extends Component {
   }
 
   async handleSubmit(event) {
+    const toy = this.state
+    console.log(toy)
     event.preventDefault()
-    const newToy = await this.props.createToy(this.state)
-    window.alert(`Item with ID No.${newToy.id} has been sucessfully created`)
+    await this.props.addToy(toy)
+    window.alert(
+      `Item with ID No.${this.props.singleToy.id} has been sucessfully created`
+    )
   }
 
   render() {
     const toy = this.state
     return (
       <div id="add-toy">
-        <Link to="/toys">Back to List of Toys</Link>
-        {/* <form id="add-toy-form" onSubmit={this.handleSubmit}>
+        <h1>Add New Product</h1>
+        <form id="add-toy-form" onSubmit={this.handleSubmit}>
           <label htmlFor="name">Toy Name:</label>
           <input
             name="name"
@@ -78,21 +82,21 @@ class AddToy extends Component {
           <button type="submit" id="create-btn">
             Add new product
           </button>
-        </form> */}
+        </form>
       </div>
     )
   }
 }
 
-// const mapState = (state) => {
-//   return {
-//     singleToy: state.singleToy,
-//   }
-// }
+const mapState = state => {
+  return {
+    singleToy: state.singleToy
+  }
+}
 
 const mapDispatch = dispatch => ({
-  addToy: () => dispatch(createToy())
+  addToy: toy => dispatch(createToy(toy))
   // updateToy: (id, toy) => dispatch(editToy(id, toy)),
 })
 
-export default connect(null, mapDispatch)(AddToy)
+export default connect(mapState, mapDispatch)(AddToy)
