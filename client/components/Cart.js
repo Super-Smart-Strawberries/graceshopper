@@ -54,7 +54,7 @@ class Cart extends React.Component {
                     <b>{toy.name}</b>
                   </span>
                   <p>Description: {toy.description}</p>
-                  <p>Unit Price: ${toy.price}</p>
+                  <p>Unit Price: ${toy.price / 100}</p>
                   <UpdateOrderItem orderItem={orderItem} />
                 </div>
                 <div>
@@ -69,7 +69,7 @@ class Cart extends React.Component {
             <h2>
               Total Price: $
               {orderItems
-                .map(item => item.toy.price * item.quantity)
+                .map(item => item.toy.price / 100 * item.quantity)
                 .reduce((total, subtotal) => total + subtotal)
                 .toFixed(2)}
             </h2>

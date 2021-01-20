@@ -19,8 +19,8 @@ class SingleToy extends Component {
           <div>
             <h2>{singleToy.name}</h2>
             <div>{singleToy.description}</div>
-            <div>${singleToy.price}</div>
-            <img src={singleToy.image} height="300"/>
+            <div>${singleToy.price / 100}</div>
+            <img src={singleToy.image} height="300" />
             {reviews && reviews.length
               ? reviews.map(review => (
                   <ul key={review.id}>
