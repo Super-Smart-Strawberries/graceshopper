@@ -18,12 +18,12 @@ const {
   OrderItem,
   UserInfo
 } = require('../server/db/models')
-// const {act} = require('react-test-renderer')
+//const {act} = require('react-test-renderer')
 
 const toyOne = {
   name: 'rubber ducky',
   description: 'the one friend on your desk',
-  price: 15.5,
+  price: 1550,
   image:
     'https://cdn.shopify.com/s/files/1/0012/4482/3632/products/duck_1200x.jpg?v=1583533109',
   inventory: 20
@@ -42,14 +42,14 @@ const reviewTwo = {
 const toyTwo = {
   name: 'Lovely Duckly',
   description: 'Rubber Ducky',
-  price: 150.98,
+  price: 15098,
   inventory: 15
 }
 
 const toyThree = {
   name: 'angry ducky',
   description: 'heated',
-  price: 1000.99,
+  price: 100099,
   inventory: 30
 }
 
@@ -74,8 +74,12 @@ async function seed() {
   console.log('db synced!')
 
   const users = await Promise.all([
-    UserLogin.create({email: 'cody@email.com', password: '123', isAdmin: true}),
-    UserLogin.create({email: 'murphy@email.com', password: '123'})
+    UserLogin.create({
+      email: 'cody@email.com',
+      password: '123456789',
+      isAdmin: true
+    }),
+    UserLogin.create({email: 'murphy@email.com', password: '123456789'})
   ])
 
   //bulk create data
