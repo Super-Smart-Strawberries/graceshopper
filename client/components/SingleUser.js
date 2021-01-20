@@ -18,7 +18,7 @@ class SingleUser extends React.Component {
   }
 
   render() {
-    return <h1>User Information:</h1>
+    return <h2>User Information:</h2>
   }
 }
 const mapState = state => {
