@@ -4,7 +4,8 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    const newOrderItem = OrderItem.create(req.body)
+    const data = req.body
+    const newOrderItem = OrderItem.create(data)
     res.send(newOrderItem)
   } catch (error) {
     console.log(error)
@@ -13,18 +14,23 @@ router.post('/', async (req, res, next) => {
 
 router.put('/update/:orderItemId', async (req, res, next) => {
   try {
-    if (req.user) {
+    const {user} = req
+    const {id} = user
+    const data = req.body
+    const {orderItemId} = req.params
+    const guestId = req.sessionID
+    if (user) {
       // Existing user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.user.id,
+          userLoginId: id,
           isOrdered: false
         }
       })
-      const updated = await OrderItem.update(req.body, {
+      const updated = await OrderItem.update(data, {
         returning: true,
         where: {
-          id: req.params.orderItemId,
+          id: orderItemId,
           purchaseActivityId: dataValues.id
         }
       })
@@ -38,14 +44,14 @@ router.put('/update/:orderItemId', async (req, res, next) => {
       // Guest user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.user.id,
+          guestId: guestId,
           isOrdered: false
         }
       })
-      const updated = await OrderItem.update(req.body, {
+      const updated = await OrderItem.update(data, {
         returning: true,
         where: {
-          id: req.params.orderItemId,
+          id: orderItemId,
           purchaseActivityId: dataValues.id
         }
       })
@@ -63,17 +69,21 @@ router.put('/update/:orderItemId', async (req, res, next) => {
 
 router.delete('/delete/:orderItemId', async (req, res, next) => {
   try {
-    if (req.user) {
+    const {user} = req
+    const {id} = user
+    const {orderItemId} = req.params
+    const guestId = req.sessionID
+    if (user) {
       // Existing user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.user.id,
+          userLoginId: id,
           isOrdered: false
         }
       })
       await OrderItem.destroy({
         where: {
-          id: req.params.orderItemId,
+          id: orderItemId,
           purchaseActivityId: dataValues.id
         }
       })
@@ -82,13 +92,13 @@ router.delete('/delete/:orderItemId', async (req, res, next) => {
       // Guest user
       const {dataValues} = await PurchaseActivity.findOne({
         where: {
-          userLoginId: req.sesisonID,
+          guestId: guestId,
           isOrdered: false
         }
       })
       await OrderItem.destroy({
         where: {
-          id: req.params.orderItemId,
+          id: orderItemId,
           purchaseActivityId: dataValues.id
         }
       })
