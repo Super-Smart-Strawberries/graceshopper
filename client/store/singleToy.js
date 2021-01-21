@@ -3,6 +3,7 @@ import axios from 'axios'
 const SET_SINGLE_TOY = 'SET_SINGLE_TOY'
 const DELETE_TOY = 'DELETE_TOY'
 const EDIT_TOY = 'EDIT_TOY'
+const CREATE_TOY = 'CREATE_TOY'
 
 const setSingleToy = toy => {
   return {
@@ -21,6 +22,13 @@ const deletedToy = id => {
 const editedToy = toy => {
   return {
     type: EDIT_TOY,
+    toy
+  }
+}
+
+const createdToy = toy => {
+  return {
+    type: CREATE_TOY,
     toy
   }
 }
@@ -58,6 +66,17 @@ export const editToy = (id, toy) => {
   }
 }
 
+export const createToy = toy => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post('/api/toys', toy)
+      dispatch(createdToy(data))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 const initialState = {}
 
 export default function singleToyReducer(state = initialState, action) {
@@ -67,6 +86,8 @@ export default function singleToyReducer(state = initialState, action) {
     case DELETE_TOY:
       return initialState
     case EDIT_TOY:
+      return action.toy
+    case CREATE_TOY:
       return action.toy
     default:
       return state
