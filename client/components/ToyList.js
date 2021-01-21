@@ -10,9 +10,13 @@ class ToyList extends Component {
 
   render() {
     const {toys} = this.props
+    const {isAdmin} = this.props
     return (
       <div>
+
         <ul className="toy-list">
+        {isAdmin ? <Link to="/toys/add">Add New Product</Link> : ''}
+
           {toys === undefined ? (
             <h3>Loading Toys...</h3>
           ) : toys.length ? (
@@ -37,7 +41,8 @@ class ToyList extends Component {
 
 const mapState = state => {
   return {
-    toys: state.toys
+    toys: state.toys,
+    isAdmin: state.user.isAdmin
   }
 }
 

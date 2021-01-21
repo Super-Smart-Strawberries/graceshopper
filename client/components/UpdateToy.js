@@ -33,6 +33,9 @@ class UpdateToy extends Component {
     event.preventDefault()
     const id = this.props.singleToy.id
     this.props.updateToy(id, this.state)
+    window.alert(
+      `Item with ID No.${this.props.singleToy.id} has been sucessfully updated`
+    )
   }
 
   handleDelete(toyId) {
@@ -58,6 +61,7 @@ class UpdateToy extends Component {
                   defaultValue={toy.name}
                 />
                 <br />
+                <label htmlFor="description">Toy Description:</label>
                 <input
                   name="description"
                   type="text"
@@ -65,6 +69,7 @@ class UpdateToy extends Component {
                   defaultValue={toy.description}
                 />
                 <br />
+                <label htmlFor="price">Toy Price:</label>
                 <input
                   name="price"
                   type="number"
@@ -72,6 +77,7 @@ class UpdateToy extends Component {
                   defaultValue={toy.price / 100}
                 />
                 <br />
+                <label htmlFor="image">Toy Image URL:</label>
                 <input
                   name="image"
                   type="text"
@@ -79,6 +85,7 @@ class UpdateToy extends Component {
                   defaultValue={toy.image}
                 />
                 <br />
+                <label htmlFor="image">Toy Inventory:</label>
                 <input
                   name="inventory"
                   type="number"
