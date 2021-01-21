@@ -10,7 +10,7 @@ class UpdateToy extends Component {
     this.state = {
       name: toy.name,
       description: toy.description,
-      price: toy.price / 100,
+      price: toy.price,
       image: toy.image,
       inventory: toy.inventory
     }
@@ -69,7 +69,7 @@ class UpdateToy extends Component {
                   name="price"
                   type="number"
                   onChange={this.handleChange}
-                  defaultValue={toy.price / 100}
+                  defaultValue={toy.price}
                 />
                 <br />
                 <input
