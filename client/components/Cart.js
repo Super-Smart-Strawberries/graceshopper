@@ -48,7 +48,7 @@ class Cart extends React.Component {
             return (
               <li key={orderItem.id} className="cart-list">
                 <div className="item-img">
-                  <img src={toy.image} height="100" />
+                  <img src={toy.image} height="150" />
                 </div>
                 <div className="item-desc">
                   <span className="item-name">
@@ -59,7 +59,11 @@ class Cart extends React.Component {
                   <UpdateOrderItem orderItem={orderItem} toy={toy} />
                 </div>
                 <div>
-                  <button type="button" onClick={() => remove(orderItem.id)}>
+                  <button
+                    className="remove-btn"
+                    type="button"
+                    onClick={() => remove(orderItem.id)}
+                  >
                     Remove Order Item
                   </button>
                 </div>

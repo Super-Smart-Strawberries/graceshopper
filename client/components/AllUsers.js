@@ -16,13 +16,14 @@ class AllUsers extends React.Component {
     const {users} = this.props
     return (
       <div id="user-directory">
-        <h1>User Directory:</h1>
+        <h2>User Directory:</h2>
         {users &&
           users.map(user => (
             <div className="single-user" key={user.id}>
               <Link to={`/users/${user.id}`}>
-                <p>{user.id}</p>
-                <p>{user.email}</p>
+                <p>
+                  {user.id} | {user.email}
+                </p>
               </Link>
             </div>
           ))}

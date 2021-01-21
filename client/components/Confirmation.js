@@ -22,7 +22,7 @@ class Confirmation extends React.Component {
             return (
               <li key={orderItem.id} className="cart-list">
                 <div className="item-img">
-                  <img src={toy.image} height="100" />
+                  <img src={toy.image} height="150" />
                 </div>
                 <div className="item-desc">
                   <span className="item-name">
