@@ -14,7 +14,8 @@ import {
   UpdateToy,
   AddToCart,
   authForm,
-  UpdateOrderItem
+  UpdateOrderItem,
+  AddToy
 } from './components'
 import {me} from './store'
 import Confirmation from './components/Confirmation'
@@ -37,8 +38,10 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/toys" component={ToyList} />
         <Route exact path="/purchase-activity" component={Cart} />
+        <Route exact path="/toys/add" component={AddToy} />
         <Route exact path="/toys/:toyId" component={SingleToy} />
         <Route exact path="/toys/:toyId/edit" component={UpdateToy} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
