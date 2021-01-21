@@ -22,19 +22,26 @@ class SingleToy extends Component {
             <div>${singleToy.price / 100}</div>
 
             <img src={singleToy.image} height="300" />
-            {reviews && reviews.length
-              ? reviews.map(review => (
-                  <ul key={review.id}>
-                    <li>Rating: {review.ratings}</li>
-                    <li>{review.description}</li>
-                  </ul>
-                ))
-              : ''}
+            <br />
+            <div id="review-container">
+              {reviews && reviews.length
+                ? reviews.map(review => (
+                    <ul key={review.id}>
+                      <li>Rating: {review.ratings}</li>
+                      <li>{review.description}</li>
+                    </ul>
+                  ))
+                : ''}
+            </div>
+
+            <br />
+
             {singleToy.inventory === 0 ? (
               <div>OUT OF STOCK</div>
             ) : (
               <AddToCart singleToy={singleToy} />
             )}
+            <br />
             {isAdmin ? <Link to={`${singleToy.id}/edit`}>Edit Toy</Link> : ''}
           </div>
         ) : (
